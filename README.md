@@ -17,6 +17,7 @@ python3 scripts/wealth_scraper.py
 ```
 
 默认会写入 `frontend/public/data/wealth.json`。
+输出中每条产品会包含 `updatedAt`（UTC 时间）。
 
 如需指定路径：
 ```
@@ -49,10 +50,7 @@ WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 scripts/wealth_scrap
 WEALTH_DEBUG=1 python3 scripts/wealth_scraper.py
 ```
 
-遇到单个链接失败仍然继续（只记录日志，不写入结果）：
-```
-WEALTH_CONTINUE_ON_ERROR=1 python3 scripts/wealth_scraper.py
-```
+单个链接失败会自动记录日志并继续，不会中断；脚本最后会输出成功/失败数量和失败 URL。
 
 不推荐的临时绕过：
 ```

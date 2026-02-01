@@ -14,7 +14,14 @@ def main() -> int:
     args = parser.parse_args()
 
     urls = load_links(args.links)
-    products = scrape_all(urls)
+    products, failures = scrape_all(urls)
     write_json(args.output, products)
-    print(f"Wrote {len(products)} products to {args.output}")
+    total = len(urls)
+    success = len(products)
+    failed = len(failures)
+    print(f"Wrote {success} products to {args.output}")
+    print(f"Summary: {success}/{total} succeeded, {failed} failed")
+    if failures:
+        for url, reason in failures:
+            print(f"- FAIL {url} :: {reason}")
     return 0

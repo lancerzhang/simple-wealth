@@ -20,6 +20,7 @@ export interface Product {
   fundCode?: string;
   realProductCode?: string;
   notes?: string;
+  updatedAt?: string;
 }
 
 export interface CycleData {

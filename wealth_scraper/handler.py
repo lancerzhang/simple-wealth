@@ -11,6 +11,11 @@ def lambda_handler(event, context):
     links_path = Path(os.environ.get("WEALTH_LINKS_PATH", DEFAULT_LINKS))
     output_path = Path(os.environ.get("WEALTH_OUTPUT_PATH", "/tmp/wealth.json"))
     urls = load_links(links_path)
-    products = scrape_all(urls)
+    products, failures = scrape_all(urls)
     write_json(output_path, products)
-    return {"count": len(products), "output": str(output_path)}
+    return {
+        "count": len(products),
+        "failed": len(failures),
+        "failures": [{"url": url, "error": err} for url, err in failures],
+        "output": str(output_path),
+    }

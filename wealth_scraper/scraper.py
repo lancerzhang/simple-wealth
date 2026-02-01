@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import json
 import re
-from pathlib import Path
-from typing import Dict, Iterable, List
-import os
 import sys
+import datetime as dt
+from pathlib import Path
+from typing import Dict, Iterable, List, Tuple
 
 from .providers import fetch_bocomm, fetch_cibwm, fetch_spdb, fetch_wealthccb
 
@@ -40,19 +40,21 @@ def load_links(path: Path) -> List[str]:
     return urls
 
 
-def scrape_all(urls: Iterable[str]) -> List[Dict]:
+def scrape_all(urls: Iterable[str]) -> Tuple[List[Dict], List[Tuple[str, str]]]:
     products: List[Dict] = []
+    failures: List[Tuple[str, str]] = []
+    timestamp = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
     for index, url in enumerate(urls, start=1):
         try:
             product = scrape_product(url)
             product["id"] = build_product_id(product, index)
+            product.setdefault("updatedAt", timestamp)
             products.append(product)
         except Exception as exc:
-            if os.environ.get("WEALTH_CONTINUE_ON_ERROR") == "1":
-                print(f"[scrape] failed for {url}: {exc}", file=sys.stderr, flush=True)
-                continue
-            raise
-    return products
+            failures.append((url, str(exc)))
+            print(f"[scrape] failed for {url}: {exc}", file=sys.stderr, flush=True)
+            continue
+    return products, failures
 
 
 def write_json(path: Path, data: List[Dict]) -> None:
