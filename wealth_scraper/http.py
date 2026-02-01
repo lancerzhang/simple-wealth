@@ -16,26 +16,32 @@ class FetchResult:
     url: str
 
 
-def _build_ssl_context() -> ssl.SSLContext:
+def _build_ssl_context(allow_legacy: bool) -> ssl.SSLContext:
     if os.environ.get("WEALTH_SSL_NO_VERIFY") == "1":
         context = ssl.create_default_context()
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
-        return context
+    else:
+        ca_bundle = os.environ.get("WEALTH_CA_BUNDLE")
+        if ca_bundle:
+            context = ssl.create_default_context(cafile=ca_bundle)
+        else:
+            try:
+                import certifi
 
-    ca_bundle = os.environ.get("WEALTH_CA_BUNDLE")
-    if ca_bundle:
-        return ssl.create_default_context(cafile=ca_bundle)
+                context = ssl.create_default_context(cafile=certifi.where())
+            except Exception:
+                context = ssl.create_default_context()
 
-    try:
-        import certifi
+    if allow_legacy:
+        legacy_flag = getattr(ssl, "OP_LEGACY_SERVER_CONNECT", 0)
+        if legacy_flag:
+            context.options |= legacy_flag
+    return context
 
-        return ssl.create_default_context(cafile=certifi.where())
-    except Exception:
-        return ssl.create_default_context()
 
-
-_SSL_CONTEXT = _build_ssl_context()
+_SSL_CONTEXT = _build_ssl_context(allow_legacy=False)
+_SSL_CONTEXT_LEGACY = _build_ssl_context(allow_legacy=True)
 
 
 def http_fetch(
@@ -50,9 +56,18 @@ def http_fetch(
     if headers:
         req_headers.update(headers)
     req = Request(url, data=data, headers=req_headers, method=method)
-    with urlopen(req, timeout=timeout, context=_SSL_CONTEXT) as resp:
-        raw = resp.read()
-    return FetchResult(text=raw.decode("utf-8", errors="ignore"), url=url)
+    prefer_legacy = os.environ.get("WEALTH_SSL_ALLOW_LEGACY") == "1"
+    context = _SSL_CONTEXT_LEGACY if prefer_legacy else _SSL_CONTEXT
+    try:
+        with urlopen(req, timeout=timeout, context=context) as resp:
+            raw = resp.read()
+        return FetchResult(text=raw.decode("utf-8", errors="ignore"), url=url)
+    except ssl.SSLError as exc:
+        if not prefer_legacy and "UNSAFE_LEGACY_RENEGOTIATION_DISABLED" in str(exc):
+            with urlopen(req, timeout=timeout, context=_SSL_CONTEXT_LEGACY) as resp:
+                raw = resp.read()
+            return FetchResult(text=raw.decode("utf-8", errors="ignore"), url=url)
+        raise
 
 
 def fetch_json(

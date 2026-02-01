@@ -34,6 +34,11 @@ python3 scripts/wealth_scraper.py --links data/product_links.txt --output fronte
 WEALTH_CA_BUNDLE=/path/to/ca.pem python3 scripts/wealth_scraper.py
 ```
 
+如果遇到 `UNSAFE_LEGACY_RENEGOTIATION_DISABLED`：
+```
+WEALTH_SSL_ALLOW_LEGACY=1 python3 scripts/wealth_scraper.py
+```
+
 不推荐的临时绕过：
 ```
 WEALTH_SSL_NO_VERIFY=1 python3 scripts/wealth_scraper.py
@@ -69,4 +74,3 @@ export SCHEDULE_EXPRESSION="cron(0 1 * * ? *)"  # 香港时间 09:00
 ### Lambda 环境变量
 - `WEALTH_LINKS_PATH`（默认：`data/product_links.txt`）
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
-
