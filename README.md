@@ -39,6 +39,11 @@ WEALTH_CA_BUNDLE=/path/to/ca.pem python3 scripts/wealth_scraper.py
 WEALTH_SSL_ALLOW_LEGACY=1 python3 scripts/wealth_scraper.py
 ```
 
+如果遇到 404/5xx 间歇性错误，可增加重试次数与退避时间：
+```
+WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 scripts/wealth_scraper.py
+```
+
 不推荐的临时绕过：
 ```
 WEALTH_SSL_NO_VERIFY=1 python3 scripts/wealth_scraper.py

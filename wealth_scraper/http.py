@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 import os
 import ssl
+import time
 from dataclasses import dataclass
 from typing import Dict, Optional
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from .config import USER_AGENT
@@ -58,16 +60,32 @@ def http_fetch(
     req = Request(url, data=data, headers=req_headers, method=method)
     prefer_legacy = os.environ.get("WEALTH_SSL_ALLOW_LEGACY") == "1"
     context = _SSL_CONTEXT_LEGACY if prefer_legacy else _SSL_CONTEXT
-    try:
-        with urlopen(req, timeout=timeout, context=context) as resp:
-            raw = resp.read()
-        return FetchResult(text=raw.decode("utf-8", errors="ignore"), url=url)
-    except ssl.SSLError as exc:
-        if not prefer_legacy and "UNSAFE_LEGACY_RENEGOTIATION_DISABLED" in str(exc):
-            with urlopen(req, timeout=timeout, context=_SSL_CONTEXT_LEGACY) as resp:
+    retries = int(os.environ.get("WEALTH_HTTP_RETRIES", "3"))
+    backoff = float(os.environ.get("WEALTH_HTTP_RETRY_BACKOFF", "0.8"))
+    retry_statuses = {404, 408, 429, 500, 502, 503, 504}
+
+    for attempt in range(retries + 1):
+        try:
+            with urlopen(req, timeout=timeout, context=context) as resp:
                 raw = resp.read()
             return FetchResult(text=raw.decode("utf-8", errors="ignore"), url=url)
-        raise
+        except ssl.SSLError as exc:
+            if not prefer_legacy and "UNSAFE_LEGACY_RENEGOTIATION_DISABLED" in str(exc):
+                prefer_legacy = True
+                context = _SSL_CONTEXT_LEGACY
+                if attempt < retries:
+                    continue
+            raise
+        except HTTPError as exc:
+            if exc.code in retry_statuses and attempt < retries:
+                time.sleep(backoff * (2 ** attempt))
+                continue
+            raise
+        except URLError:
+            if attempt < retries:
+                time.sleep(backoff * (2 ** attempt))
+                continue
+            raise
 
 
 def fetch_json(
