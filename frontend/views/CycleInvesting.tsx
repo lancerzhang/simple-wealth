@@ -1,8 +1,12 @@
 
 import React from 'react';
-import { CYCLE_ANALYSIS } from '../constants';
+import { CycleData } from '../types';
 
-const CycleInvesting: React.FC = () => {
+interface CycleInvestingProps {
+  data: CycleData[];
+}
+
+const CycleInvesting: React.FC<CycleInvestingProps> = ({ data }) => {
   return (
     <div className="space-y-8 animate-fadeIn">
       <div className="text-center max-w-2xl mx-auto space-y-4">
@@ -13,7 +17,7 @@ const CycleInvesting: React.FC = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {CYCLE_ANALYSIS.map((item, idx) => (
+        {data.map((item, idx) => (
           <div key={idx} className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-all">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-gray-800">{item.asset}</h3>

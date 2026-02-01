@@ -1,0 +1,30 @@
+[
+  {
+    "asset": "A股市场",
+    "stage": "筑底期",
+    "progress": 20,
+    "description": "当前估值处于历史低位，政策底已现，市场正在反复磨底。",
+    "suggestion": "保持耐心，分批布局蓝筹及高股息资产。"
+  },
+  {
+    "asset": "美股纳指",
+    "stage": "过热期",
+    "progress": 85,
+    "description": "AI浪潮推升科技股溢价，估值偏高，需警惕回调风险。",
+    "suggestion": "适当止盈，关注防御性品种。"
+  },
+  {
+    "asset": "实物黄金",
+    "stage": "成长期",
+    "progress": 60,
+    "description": "避险情绪及全球央行增持支撑金价震荡上行。",
+    "suggestion": "逢低吸纳，作为配置中的压舱石。"
+  },
+  {
+    "asset": "房地产市场",
+    "stage": "衰退期",
+    "progress": 95,
+    "description": "人口结构变化及金融周期导致长期调整压力。",
+    "suggestion": "刚需审慎，投资需避开三四线城市。"
+  }
+]
