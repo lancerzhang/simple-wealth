@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PYTHON_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${PYTHON_DIR}/.." && pwd)"
 FUNCTION_NAME="${LAMBDA_FUNCTION_NAME:-wealth-scraper}"
 REGION="${AWS_REGION:-ap-east-1}"
 RUNTIME="${LAMBDA_RUNTIME:-python3.11}"
@@ -28,7 +29,7 @@ if ! command -v zip >/dev/null 2>&1; then
   exit 1
 fi
 
-cd "$ROOT_DIR"
+cd "$PYTHON_DIR"
 rm -f "$ZIP_PATH"
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR/data" "$BUILD_DIR/scripts"
@@ -44,7 +45,7 @@ cp scripts/wealth_scraper.py "$BUILD_DIR/scripts/wealth_scraper.py"
 
 cd "$BUILD_DIR"
 zip -r "$ZIP_PATH" . -x "**/__pycache__/*" "**/*.pyc" "**/.DS_Store" >/dev/null
-cd "$ROOT_DIR"
+cd "$PYTHON_DIR"
 
 if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1; then
   aws lambda update-function-code \

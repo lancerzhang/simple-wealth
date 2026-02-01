@@ -1,19 +1,34 @@
 # simple-wealth
 
+## 前端运行
+
+**依赖：** Node.js
+
+在 `frontend` 目录运行：
+```
+npm install
+npm run dev
+```
+
+生产构建：
+```
+npm run build
+```
+
 ## 数据抓取（理财产品）
 
 ### 链接配置
-产品链接在 `data/product_links.txt`，按行放 URL。
+产品链接在 `python/data/product_links.txt`，按行放 URL。
 
 ### 本地运行
 1) 安装依赖（用于 SSL 证书）：
 ```
-python3 -m pip install -r requirements.txt
+python3 -m pip install -r python/requirements.txt
 ```
 
 2) 运行抓取：
 ```
-python3 scripts/wealth_scraper.py
+python3 python/scripts/wealth_scraper.py
 ```
 
 默认会写入 `frontend/public/data/wealth.json`。
@@ -21,7 +36,7 @@ python3 scripts/wealth_scraper.py
 
 如需指定路径：
 ```
-python3 scripts/wealth_scraper.py --links data/product_links.txt --output frontend/public/data/wealth.json
+python3 python/scripts/wealth_scraper.py --links python/data/product_links.txt --output frontend/public/data/wealth.json
 ```
 
 ### SSL 证书问题（macOS 常见）
@@ -32,22 +47,22 @@ python3 scripts/wealth_scraper.py --links data/product_links.txt --output fronte
 
 或者临时指定 CA：
 ```
-WEALTH_CA_BUNDLE=/path/to/ca.pem python3 scripts/wealth_scraper.py
+WEALTH_CA_BUNDLE=/path/to/ca.pem python3 python/scripts/wealth_scraper.py
 ```
 
 如果遇到 `UNSAFE_LEGACY_RENEGOTIATION_DISABLED`：
 ```
-WEALTH_SSL_ALLOW_LEGACY=1 python3 scripts/wealth_scraper.py
+WEALTH_SSL_ALLOW_LEGACY=1 python3 python/scripts/wealth_scraper.py
 ```
 
 如果遇到 404/5xx 间歇性错误，可增加重试次数与退避时间：
 ```
-WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 scripts/wealth_scraper.py
+WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 python/scripts/wealth_scraper.py
 ```
 
 开启调试日志：
 ```
-WEALTH_DEBUG=1 python3 scripts/wealth_scraper.py
+WEALTH_DEBUG=1 python3 python/scripts/wealth_scraper.py
 ```
 调试日志会输出收益率的获取/计算来源与区间明细。
 
@@ -55,19 +70,19 @@ WEALTH_DEBUG=1 python3 scripts/wealth_scraper.py
 
 不推荐的临时绕过：
 ```
-WEALTH_SSL_NO_VERIFY=1 python3 scripts/wealth_scraper.py
+WEALTH_SSL_NO_VERIFY=1 python3 python/scripts/wealth_scraper.py
 ```
 
 ## AWS Lambda 部署
 
 ### 一键部署
-脚本：`scripts/deploy_lambda.sh`
+脚本：`python/deploy_lambda.sh`
 
 最小用法（首次创建函数需要角色 ARN）：
 ```
 export AWS_REGION=ap-east-1
 export LAMBDA_ROLE_ARN=arn:aws:iam::123456789012:role/your-lambda-role
-./scripts/deploy_lambda.sh
+./python/deploy_lambda.sh
 ```
 
 可选参数：
@@ -81,7 +96,7 @@ export SCHEDULE_EXPRESSION="cron(0 1 * * ? *)"  # 香港时间 09:00
 ```
 
 脚本会自动：
-- 安装 `requirements.txt` 到打包目录
+- 安装 `python/requirements.txt` 到打包目录
 - 打包并更新/创建 Lambda
 - 创建 EventBridge 定时触发
 

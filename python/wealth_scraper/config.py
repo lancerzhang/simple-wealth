@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-DEFAULT_LINKS = ROOT_DIR / "data" / "product_links.txt"
-DEFAULT_OUTPUT = ROOT_DIR / "frontend" / "public" / "data" / "wealth.json"
+PYTHON_DIR = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_LINKS = PYTHON_DIR / "data" / "product_links.txt"
+DEFAULT_OUTPUT = REPO_ROOT / "frontend" / "public" / "data" / "wealth.json"
 
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
