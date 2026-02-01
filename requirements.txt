@@ -1,2 +1,1 @@
-# Standard-library only for scraping.
-# Add boto3 if you want Lambda to upload results to S3 from code.
+certifi>=2024.2.2

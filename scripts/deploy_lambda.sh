@@ -13,6 +13,9 @@ SCHEDULE_EXPRESSION="${SCHEDULE_EXPRESSION:-cron(0 1 * * ? *)}"
 
 ZIP_DIR="${ROOT_DIR}/dist"
 ZIP_PATH="${ZIP_DIR}/wealth-scraper.zip"
+BUILD_DIR="${ZIP_DIR}/lambda_build"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+SKIP_PIP_INSTALL="${SKIP_PIP_INSTALL:-0}"
 mkdir -p "$ZIP_DIR"
 
 if ! command -v aws >/dev/null 2>&1; then
@@ -27,12 +30,21 @@ fi
 
 cd "$ROOT_DIR"
 rm -f "$ZIP_PATH"
-zip -r "$ZIP_PATH" \
-  wealth_scraper \
-  data/product_links.txt \
-  requirements.txt \
-  scripts/wealth_scraper.py \
-  -x "**/__pycache__/*" "**/*.pyc" "**/.DS_Store" >/dev/null
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR/data" "$BUILD_DIR/scripts"
+
+if [[ "$SKIP_PIP_INSTALL" != "1" ]] && grep -Eqv '^\s*(#|$)' requirements.txt; then
+  "$PYTHON_BIN" -m pip install -r requirements.txt -t "$BUILD_DIR" >/dev/null
+fi
+
+cp -R wealth_scraper "$BUILD_DIR/"
+cp data/product_links.txt "$BUILD_DIR/data/product_links.txt"
+cp requirements.txt "$BUILD_DIR/requirements.txt"
+cp scripts/wealth_scraper.py "$BUILD_DIR/scripts/wealth_scraper.py"
+
+cd "$BUILD_DIR"
+zip -r "$ZIP_PATH" . -x "**/__pycache__/*" "**/*.pyc" "**/.DS_Store" >/dev/null
+cd "$ROOT_DIR"
 
 if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1; then
   aws lambda update-function-code \
