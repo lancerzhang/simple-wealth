@@ -15,7 +15,7 @@ const Home: React.FC = () => {
               开始使用
             </button>
             <a 
-              href="https://github.com" 
+              href="https://github.com/lancerzhang/simple-wealth"
               className="px-6 py-3 bg-indigo-500 text-white font-bold rounded-xl hover:bg-indigo-400 transition-colors"
             >
               提交 PR
@@ -24,6 +24,50 @@ const Home: React.FC = () => {
         </div>
         <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-indigo-500 rounded-full opacity-20 blur-3xl"></div>
         <div className="absolute right-10 top-10 w-40 h-40 bg-indigo-400 rounded-full opacity-20 blur-2xl"></div>
+      </div>
+
+      <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-3xl shadow-sm">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex-1">
+            <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7h16M4 12h16M4 17h16" /></svg>
+            </div>
+            <h3 className="text-xl font-bold mb-2">欢迎使用数据文件</h3>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              数据文件对外开放，欢迎用 AI 读取、分析或做可视化研究。示例数据如下：
+            </p>
+            <div className="mt-3">
+              <a
+                href="https://simple-wealth-cn.s3.ap-southeast-1.amazonaws.com/data/wealth.json"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 bg-gray-50 text-gray-700 rounded-xl text-xs font-mono hover:bg-gray-100"
+              >
+                wealth.json 数据文件
+              </a>
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" /></svg>
+            </div>
+            <h3 className="text-xl font-bold mb-2">想添加理财产品？</h3>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              请提交 commit 到产品链接清单，我们会根据链接更新数据。
+            </p>
+            <div className="mt-3">
+              <a
+                href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/product_links.txt"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-mono hover:bg-emerald-100"
+              >
+                product_links.txt
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">

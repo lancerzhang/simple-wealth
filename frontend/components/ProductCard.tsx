@@ -60,16 +60,55 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isFavorited, onToggl
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-1.5">
-        {product.banks.map((bank) => (
-          <span key={bank} className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-[10px] font-medium rounded-md">
-            {bank}
+      <div className="grid grid-cols-2 gap-2 mb-4 text-xs text-gray-600">
+        <div className="flex items-center justify-between bg-gray-50 rounded-lg px-2 py-1">
+          <span className="text-gray-400">币种</span>
+          <span className="font-medium text-gray-700">{product.currency ?? '—'}</span>
+        </div>
+        <div className="flex items-center justify-between bg-gray-50 rounded-lg px-2 py-1">
+          <span className="text-gray-400">风险</span>
+          <span className="font-medium text-gray-700">{product.riskLevel ?? '—'}</span>
+        </div>
+        <div className="flex items-center justify-between bg-gray-50 rounded-lg px-2 py-1 col-span-2">
+          <span className="text-gray-400">发行方</span>
+          <span className="font-medium text-gray-700 truncate" title={product.issuer ?? '—'}>
+            {product.issuer ?? '—'}
           </span>
-        ))}
+        </div>
+        <div className="flex items-center justify-between bg-gray-50 rounded-lg px-2 py-1 col-span-2">
+          <span className="text-gray-400">数据源</span>
+          {product.url ? (
+            <a
+              href={product.url}
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+              title={product.url}
+            >
+              查看官网
+            </a>
+          ) : (
+            <span className="font-medium text-gray-700">—</span>
+          )}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[10px] text-gray-400 font-medium">代销渠道</span>
+          {product.banks.map((bank) => (
+            <span key={bank} className="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-[10px] font-medium rounded-md">
+              {bank}
+            </span>
+          ))}
+        </div>
         {product.manager && (
-          <span className="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] font-medium rounded-md">
-            经理: {product.manager}
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[10px] text-gray-400 font-medium">经理</span>
+            <span className="px-2 py-0.5 bg-amber-50 text-amber-600 text-[10px] font-medium rounded-md">
+              {product.manager}
+            </span>
+          </div>
         )}
       </div>
     </div>

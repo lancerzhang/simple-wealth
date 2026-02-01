@@ -14,6 +14,10 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
   const [sortBy, setSortBy] = useState<'name' | '1m' | '3m' | '6m'>('name');
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [issuerFilter, setIssuerFilter] = useState('all');
+  const [bankFilter, setBankFilter] = useState('all');
+  const [currencyFilter, setCurrencyFilter] = useState('all');
+  const [riskFilter, setRiskFilter] = useState('all');
 
   // Load favorites from local storage on mount
   useEffect(() => {
@@ -51,6 +55,49 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
     }
   };
 
+  const filterOptions = useMemo(() => {
+    const issuers = new Set<string>();
+    const banks = new Set<string>();
+    const currencies = new Set<string>();
+    const riskLevels = new Set<string>();
+
+    products.forEach((p) => {
+      if (p.issuer) issuers.add(p.issuer);
+      if (p.currency) currencies.add(p.currency);
+      if (p.riskLevel) riskLevels.add(p.riskLevel);
+      p.banks?.forEach((bank) => banks.add(bank));
+    });
+
+    const toSorted = (values: Set<string>) =>
+      Array.from(values).sort((a, b) => a.localeCompare(b));
+
+    return {
+      issuers: toSorted(issuers),
+      banks: toSorted(banks),
+      currencies: toSorted(currencies),
+      riskLevels: toSorted(riskLevels),
+    };
+  }, [products]);
+
+  const lastUpdatedAt = useMemo(() => {
+    const timestamps = products
+      .map((p) => p.updatedAt)
+      .filter(Boolean)
+      .map((value) => Date.parse(value as string))
+      .filter((value) => !Number.isNaN(value));
+    if (timestamps.length === 0) return null;
+    return new Date(Math.max(...timestamps));
+  }, [products]);
+
+  const formatUpdatedAt = (value: Date | null) => {
+    if (!value) return '—';
+    return value.toLocaleString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
+
   const filteredAndSortedProducts = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
     const getSearchableText = (p: Product) => {
@@ -80,25 +127,44 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
         .toLowerCase();
     };
 
-    let result = products.filter(p =>
-      (!query || getSearchableText(p).includes(query)) &&
-      (!showOnlyFavorites || favorites.includes(p.id))
-    );
+    let result = products.filter(p => {
+      if (query && !getSearchableText(p).includes(query)) return false;
+      if (showOnlyFavorites && !favorites.includes(p.id)) return false;
+      if (issuerFilter !== 'all' && p.issuer !== issuerFilter) return false;
+      if (bankFilter !== 'all' && !(p.banks || []).includes(bankFilter)) return false;
+      if (currencyFilter !== 'all' && p.currency !== currencyFilter) return false;
+      if (riskFilter !== 'all' && p.riskLevel !== riskFilter) return false;
+      return true;
+    });
 
     result.sort((a, b) => {
       if (sortBy === 'name') return a.name.localeCompare(b.name);
-      return b.returns[sortBy] - a.returns[sortBy];
+      const aReturn = a.returns?.[sortBy] ?? -Infinity;
+      const bReturn = b.returns?.[sortBy] ?? -Infinity;
+      return bReturn - aReturn;
     });
 
     return result;
-  }, [products, searchTerm, sortBy, showOnlyFavorites, favorites]);
+  }, [
+    products,
+    searchTerm,
+    sortBy,
+    showOnlyFavorites,
+    favorites,
+    issuerFilter,
+    bankFilter,
+    currencyFilter,
+    riskFilter,
+  ]);
 
   return (
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h2 className="text-3xl font-extrabold text-gray-900">{title}</h2>
-        <div className="flex items-center space-x-2 text-sm text-gray-500">
+        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
           <span>共 {filteredAndSortedProducts.length} 款产品</span>
+          <span className="text-gray-400">|</span>
+          <span>数据更新时间：{formatUpdatedAt(lastUpdatedAt)}</span>
           <button 
             onClick={() => handleShare({ name: title, code: 'FinanceTool', returns: { '1m': 0, '3m': 0, '6m': 0 }, banks: ['Web'], type: 'wealth' } as any)}
             className="p-1.5 hover:bg-gray-100 rounded-lg"
@@ -141,6 +207,72 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
               <svg className={`w-4 h-4 ${showOnlyFavorites ? 'fill-current' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
               <span>{showOnlyFavorites ? '显示全部' : '只看收藏'}</span>
             </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="flex flex-col">
+            <label className="text-xs text-gray-500 mb-1">发行方</label>
+            <select
+              className="bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-indigo-500"
+              value={issuerFilter}
+              onChange={(e) => setIssuerFilter(e.target.value)}
+            >
+              <option value="all">全部发行方</option>
+              {filterOptions.issuers.map((issuer) => (
+                <option key={issuer} value={issuer}>
+                  {issuer}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-xs text-gray-500 mb-1">渠道银行</label>
+            <select
+              className="bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-indigo-500"
+              value={bankFilter}
+              onChange={(e) => setBankFilter(e.target.value)}
+            >
+              <option value="all">全部银行</option>
+              {filterOptions.banks.map((bank) => (
+                <option key={bank} value={bank}>
+                  {bank}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-xs text-gray-500 mb-1">币种</label>
+            <select
+              className="bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-indigo-500"
+              value={currencyFilter}
+              onChange={(e) => setCurrencyFilter(e.target.value)}
+            >
+              <option value="all">全部币种</option>
+              {filterOptions.currencies.map((currency) => (
+                <option key={currency} value={currency}>
+                  {currency}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-xs text-gray-500 mb-1">风险等级</label>
+            <select
+              className="bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-indigo-500"
+              value={riskFilter}
+              onChange={(e) => setRiskFilter(e.target.value)}
+            >
+              <option value="all">全部等级</option>
+              {filterOptions.riskLevels.map((risk) => (
+                <option key={risk} value={risk}>
+                  {risk}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
