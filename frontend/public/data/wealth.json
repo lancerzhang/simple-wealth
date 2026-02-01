@@ -1,34 +1,161 @@
 [
   {
-    "id": "w1",
-    "name": "中银理财-乐享天天",
-    "code": "BOC001",
-    "returns": { "1m": 2.45, "3m": 2.6, "6m": 2.85 },
-    "banks": ["中国银行", "招商银行"],
-    "type": "wealth"
+    "name": "建信理财“安鑫”（最低持有720天）按日开放固定收益类净值型人民币理财产品",
+    "code": "JXQYAX720D2018201",
+    "issuer": "建信理财",
+    "banks": [
+      "建设银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 720,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 5.5144,
+      "3m": 1.4941,
+      "6m": 0.9983
+    },
+    "url": "https://www.wealthccb.com/product/12.html",
+    "type": "wealth",
+    "id": "w-JXQYAX720D2018201"
   },
   {
-    "id": "w2",
-    "name": "招银理财-朝招金",
-    "code": "CMB888",
-    "returns": { "1m": 2.15, "3m": 2.3, "6m": 2.4 },
-    "banks": ["招商银行"],
-    "type": "wealth"
+    "name": "建信理财“安鑫”（最低持有360天）按日开放固定收益类净值型人民币理财产品",
+    "code": "JXQYAX360D2018202",
+    "issuer": "建信理财",
+    "banks": [
+      "建设银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 360,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 0.0,
+      "3m": 0.0,
+      "6m": 0.0
+    },
+    "url": "https://www.wealthccb.com/product/11.html",
+    "type": "wealth",
+    "notes": "source_missing",
+    "id": "w-JXQYAX360D2018202"
   },
   {
-    "id": "w3",
-    "name": "工银理财-随心快线",
-    "code": "ICBC002",
-    "returns": { "1m": 2.65, "3m": 2.55, "6m": 2.7 },
-    "banks": ["工商银行", "建设银行"],
-    "type": "wealth"
+    "name": "兴银理财汇利日盈6号日开固收类理财产品",
+    "code": "9W10006A",
+    "issuer": "兴银理财",
+    "banks": [
+      "兴业银行"
+    ],
+    "currency": "美元",
+    "minHoldDays": 1,
+    "riskLevel": "R1",
+    "returns": {
+      "1m": 3.316,
+      "3m": 3.3772,
+      "6m": 3.6103
+    },
+    "url": "https://www.cibwm.com.cn/personal-products/detail/c019920872708309a6b042e0818c6f04",
+    "type": "wealth",
+    "id": "w-9W10006A"
   },
   {
-    "id": "w4",
-    "name": "交银理财-稳健增长",
-    "code": "BOCOM321",
-    "returns": { "1m": 3.1, "3m": 3.45, "6m": 3.8 },
-    "banks": ["交通银行"],
-    "type": "wealth"
+    "name": "兴银理财丰利逸动11个月最短持有期日开2号增强型固收类理财产品",
+    "code": "9S65024A",
+    "issuer": "兴银理财",
+    "banks": [
+      "兴业银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 330,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 7.7635,
+      "3m": 5.2827,
+      "6m": 5.823
+    },
+    "url": "https://www.cibwm.com.cn/personal-products/detail/911701ab032bc1d016a18ee31e4f4409",
+    "type": "wealth",
+    "id": "w-9S65024A"
+  },
+  {
+    "name": "兴银理财稳利恒盈增利六个月定期开放6号固收类理财产品",
+    "code": "9K60606A",
+    "issuer": "兴银理财",
+    "banks": [
+      "兴业银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 189,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 2.6747,
+      "3m": 2.2696,
+      "6m": 2.058
+    },
+    "url": "https://www.cibwm.com.cn/personal-products/detail/a102923bfbe7dff741fab89d649db694",
+    "type": "wealth",
+    "id": "w-9K60606A"
+  },
+  {
+    "name": "交银理财稳享固收精选日开47号（90天持有期）理财产品",
+    "code": "Z7000925000252",
+    "fundCode": "5811225149",
+    "issuer": "交银理财",
+    "banks": [
+      "建设银行",
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 90,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 2.5522,
+      "3m": 3.3388,
+      "6m": 5.2338
+    },
+    "url": "https://www.bocommwm.cn/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?channelId=2503328&c_fundcode=5811225149",
+    "type": "wealth",
+    "registrationCode": "Z7000925000252",
+    "id": "w-Z7000925000252"
+  },
+  {
+    "name": "交银理财稳享固收精选日日开4号理财产品",
+    "code": "5811225495",
+    "fundCode": "5811225495",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 1,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 3.8512,
+      "3m": 4.3188,
+      "6m": 4.5722
+    },
+    "url": "https://www.bocommwm.cn/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml",
+    "type": "wealth",
+    "registrationCode": "Z7000925001373",
+    "id": "w-5811225495"
+  },
+  {
+    "name": "季季鑫最短持有期35号A",
+    "code": "Z7006925000599",
+    "realProductCode": "2501250689",
+    "issuer": "浦银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 90,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 1.9171,
+      "3m": 3.0205,
+      "6m": 4.5945
+    },
+    "url": "https://www.spdb-wm.com/financialProducts/cpxq.shtml?REAL_PRD_CODE=2501250689",
+    "type": "wealth",
+    "id": "w-Z7006925000599"
   }
 ]

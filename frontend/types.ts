@@ -11,6 +11,15 @@ export interface Product {
   banks: string[];
   type: 'wealth' | 'fund';
   manager?: string;
+  issuer?: string;
+  currency?: string;
+  minHoldDays?: number;
+  riskLevel?: string;
+  url?: string;
+  registrationCode?: string;
+  fundCode?: string;
+  realProductCode?: string;
+  notes?: string;
 }
 
 export interface CycleData {
