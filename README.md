@@ -44,6 +44,16 @@ WEALTH_SSL_ALLOW_LEGACY=1 python3 scripts/wealth_scraper.py
 WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 scripts/wealth_scraper.py
 ```
 
+开启调试日志：
+```
+WEALTH_DEBUG=1 python3 scripts/wealth_scraper.py
+```
+
+遇到单个链接失败仍然继续（并在结果中标记失败）：
+```
+WEALTH_CONTINUE_ON_ERROR=1 python3 scripts/wealth_scraper.py
+```
+
 不推荐的临时绕过：
 ```
 WEALTH_SSL_NO_VERIFY=1 python3 scripts/wealth_scraper.py

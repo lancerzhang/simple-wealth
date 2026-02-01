@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 from typing import Dict, Iterable, List
+import os
+import sys
 
 from .providers import fetch_bocomm, fetch_cibwm, fetch_spdb, fetch_wealthccb
 
@@ -41,9 +43,27 @@ def load_links(path: Path) -> List[str]:
 def scrape_all(urls: Iterable[str]) -> List[Dict]:
     products: List[Dict] = []
     for index, url in enumerate(urls, start=1):
-        product = scrape_product(url)
-        product["id"] = build_product_id(product, index)
-        products.append(product)
+        try:
+            product = scrape_product(url)
+            product["id"] = build_product_id(product, index)
+            products.append(product)
+        except Exception as exc:
+            if os.environ.get("WEALTH_CONTINUE_ON_ERROR") == "1":
+                print(f"[scrape] failed for {url}: {exc}", file=sys.stderr, flush=True)
+                products.append(
+                    {
+                        "id": build_product_id({"code": f"error-{index}"}, index),
+                        "name": "抓取失败",
+                        "code": f"error-{index}",
+                        "returns": {"1m": 0.0, "3m": 0.0, "6m": 0.0},
+                        "banks": [],
+                        "type": "wealth",
+                        "url": url,
+                        "notes": f"error: {exc}",
+                    }
+                )
+                continue
+            raise
     return products
 
 
