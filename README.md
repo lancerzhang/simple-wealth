@@ -49,6 +49,7 @@ WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 scripts/wealth_scrap
 ```
 WEALTH_DEBUG=1 python3 scripts/wealth_scraper.py
 ```
+调试日志会输出收益率的获取/计算来源与区间明细。
 
 单个链接失败会自动记录日志并继续，不会中断；脚本最后会输出成功/失败数量和失败 URL。
 

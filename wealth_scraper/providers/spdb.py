@@ -6,7 +6,8 @@ from urllib.parse import parse_qs, urlparse
 
 from ..config import SPDB_BANKS, SPDB_ISSUER, SPDB_MIN_HOLD_DAYS
 from ..http import fetch_json
-from ..utils import compute_window_return, normalize_returns, parse_date
+from ..logger import debug_log
+from ..utils import compute_window_return_with_details, normalize_returns, parse_date
 
 
 def _search(chlid: int, searchword: str, page: int = 1, maxline: int = 200) -> Dict:
@@ -59,10 +60,27 @@ def fetch(url: str) -> Dict:
         if date_value and nav_value:
             series.append((date_value, float(nav_value)))
 
+    return_1m, start_1m, start_val_1m, end_1m, end_val_1m = compute_window_return_with_details(series, 30)
+    return_3m, start_3m, start_val_3m, end_3m, end_val_3m = compute_window_return_with_details(series, 90)
+    return_6m, start_6m, start_val_6m, end_6m, end_val_6m = compute_window_return_with_details(series, 180)
+
+    debug_log(
+        f"[calc][spdb] {real_code} 1m from NAV "
+        f"start={start_1m} nav={start_val_1m} end={end_1m} nav={end_val_1m} -> {return_1m}"
+    )
+    debug_log(
+        f"[calc][spdb] {real_code} 3m from NAV "
+        f"start={start_3m} nav={start_val_3m} end={end_3m} nav={end_val_3m} -> {return_3m}"
+    )
+    debug_log(
+        f"[calc][spdb] {real_code} 6m from NAV "
+        f"start={start_6m} nav={start_val_6m} end={end_6m} nav={end_val_6m} -> {return_6m}"
+    )
+
     returns = {
-        "1m": compute_window_return(series, 30),
-        "3m": compute_window_return(series, 90),
-        "6m": compute_window_return(series, 180),
+        "1m": return_1m,
+        "3m": return_3m,
+        "6m": return_6m,
     }
 
     risk_text = detail_item.get("RISK_GRADE") or ""

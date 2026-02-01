@@ -10,6 +10,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from .config import USER_AGENT
+from .logger import debug_log
 
 
 @dataclass
@@ -44,12 +45,6 @@ def _build_ssl_context(allow_legacy: bool) -> ssl.SSLContext:
 
 _SSL_CONTEXT = _build_ssl_context(allow_legacy=False)
 _SSL_CONTEXT_LEGACY = _build_ssl_context(allow_legacy=True)
-_DEBUG = os.environ.get("WEALTH_DEBUG") == "1"
-
-
-def _log(message: str) -> None:
-    if _DEBUG:
-        print(message, flush=True)
 
 
 def http_fetch(
@@ -71,7 +66,7 @@ def http_fetch(
     retry_statuses = {404, 408, 429, 500, 502, 503, 504}
 
     for attempt in range(retries + 1):
-        _log(f"[http] {method} {url} attempt {attempt + 1}/{retries + 1} legacy={prefer_legacy}")
+        debug_log(f"[http] {method} {url} attempt {attempt + 1}/{retries + 1} legacy={prefer_legacy}")
         try:
             with urlopen(req, timeout=timeout, context=context) as resp:
                 raw = resp.read()
@@ -80,12 +75,12 @@ def http_fetch(
             if not prefer_legacy and "UNSAFE_LEGACY_RENEGOTIATION_DISABLED" in str(exc):
                 prefer_legacy = True
                 context = _SSL_CONTEXT_LEGACY
-                _log(f"[http] legacy renegotiation enabled for {url}")
+                debug_log(f"[http] legacy renegotiation enabled for {url}")
                 if attempt < retries:
                     continue
             raise
         except HTTPError as exc:
-            _log(f"[http] HTTP {exc.code} {exc.reason} for {url}")
+            debug_log(f"[http] HTTP {exc.code} {exc.reason} for {url}")
             if exc.code in retry_statuses and attempt < retries:
                 time.sleep(backoff * (2 ** attempt))
                 continue
@@ -96,10 +91,10 @@ def http_fetch(
                 if not prefer_legacy:
                     prefer_legacy = True
                     context = _SSL_CONTEXT_LEGACY
-                    _log(f"[http] legacy renegotiation enabled for {url} via URLError")
+                    debug_log(f"[http] legacy renegotiation enabled for {url} via URLError")
                     if attempt < retries:
                         continue
-            _log(f"[http] URLError for {url}: {reason}")
+            debug_log(f"[http] URLError for {url}: {reason}")
             if attempt < retries:
                 time.sleep(backoff * (2 ** attempt))
                 continue

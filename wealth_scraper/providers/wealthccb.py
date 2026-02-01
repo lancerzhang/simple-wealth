@@ -5,6 +5,7 @@ from typing import Dict, List, Tuple
 
 from ..config import WEALTHCCB_BANKS, WEALTHCCB_ISSUER
 from ..http import http_fetch
+from ..logger import debug_log
 from ..utils import compute_return_from_series, normalize_returns, parse_date, parse_min_hold_days
 
 
@@ -67,10 +68,31 @@ def parse_html(html: str, url: str) -> Dict:
     series_3m = _extract_series(html, "month")
     series_6m = _extract_series(html, "byear")
 
+    return_1m = compute_return_from_series(series_1m)
+    return_3m = compute_return_from_series(series_3m)
+    return_6m = compute_return_from_series(series_6m)
+
+    def log_series(label: str, series: List[Tuple], value: float | None) -> None:
+        if not series:
+            debug_log(f"[calc][wealthccb] {code or url} {label} series empty")
+            return
+        series_sorted = sorted(series, key=lambda x: x[0])
+        start_date, start_value = series_sorted[0]
+        end_date, end_value = series_sorted[-1]
+        debug_log(
+            f"[calc][wealthccb] {code or url} {label} "
+            f"len={len(series_sorted)} start={start_date} nav={start_value} "
+            f"end={end_date} nav={end_value} -> {value}"
+        )
+
+    log_series("1m", series_1m, return_1m)
+    log_series("3m", series_3m, return_3m)
+    log_series("6m", series_6m, return_6m)
+
     returns = {
-        "1m": compute_return_from_series(series_1m),
-        "3m": compute_return_from_series(series_3m),
-        "6m": compute_return_from_series(series_6m),
+        "1m": return_1m,
+        "3m": return_3m,
+        "6m": return_6m,
     }
 
     return {

@@ -4,7 +4,14 @@ import json
 from typing import Dict, Optional, Tuple, List
 
 from ..http import fetch_json
-from ..utils import compute_window_return, normalize_returns, parse_date, parse_min_hold_days, strip_company_suffix
+from ..logger import debug_log
+from ..utils import (
+    compute_window_return_with_details,
+    normalize_returns,
+    parse_date,
+    parse_min_hold_days,
+    strip_company_suffix,
+)
 
 
 def _fetch_detail(product_id: str) -> Dict:
@@ -47,10 +54,22 @@ def fetch(url: str) -> Dict:
         value = item.get("yarOfIncAndDcr")
         if time_range == "近1月":
             returns["1m"] = value
+            debug_log(
+                f"[calc][cibwm] {product_code} 1m from priceChange "
+                f"yarOfIncAndDcr={value} baseDt={item.get('baseDt')} effectDt={item.get('effectDt')}"
+            )
         elif time_range == "近3月":
             returns["3m"] = value
+            debug_log(
+                f"[calc][cibwm] {product_code} 3m from priceChange "
+                f"yarOfIncAndDcr={value} baseDt={item.get('baseDt')} effectDt={item.get('effectDt')}"
+            )
         elif time_range == "近6月":
             returns["6m"] = value
+            debug_log(
+                f"[calc][cibwm] {product_code} 6m from priceChange "
+                f"yarOfIncAndDcr={value} baseDt={item.get('baseDt')} effectDt={item.get('effectDt')}"
+            )
 
     if any(value is None for value in returns.values()):
         nav_data = _fetch_nav(product_id, product_code)
@@ -61,11 +80,27 @@ def fetch(url: str) -> Dict:
             nav_value = item.get("effIopv") or item.get("effTotNetVal") or item.get("adjustedValue")
             if date_value and nav_value:
                 series.append((date_value, float(nav_value)))
-        returns = {
-            "1m": returns["1m"] or compute_window_return(series, 30),
-            "3m": returns["3m"] or compute_window_return(series, 90),
-            "6m": returns["6m"] or compute_window_return(series, 180),
-        }
+        if returns["1m"] is None:
+            value, start_date, start_value, end_date, end_value = compute_window_return_with_details(series, 30)
+            returns["1m"] = value
+            debug_log(
+                f"[calc][cibwm] {product_code} 1m from NAV "
+                f"start={start_date} nav={start_value} end={end_date} nav={end_value} -> {value}"
+            )
+        if returns["3m"] is None:
+            value, start_date, start_value, end_date, end_value = compute_window_return_with_details(series, 90)
+            returns["3m"] = value
+            debug_log(
+                f"[calc][cibwm] {product_code} 3m from NAV "
+                f"start={start_date} nav={start_value} end={end_date} nav={end_value} -> {value}"
+            )
+        if returns["6m"] is None:
+            value, start_date, start_value, end_date, end_value = compute_window_return_with_details(series, 180)
+            returns["6m"] = value
+            debug_log(
+                f"[calc][cibwm] {product_code} 6m from NAV "
+                f"start={start_date} nav={start_value} end={end_date} nav={end_value} -> {value}"
+            )
 
     channels = [c.strip() for c in (data.get("distributionChannel") or "").split(",") if c.strip()]
     banks = [c for c in channels if "银行" in c]

@@ -64,6 +64,29 @@ def compute_window_return(series: List[Tuple[dt.date, float]], window_days: int)
     return annualized_return(start_value, end_value, start_date, end_date)
 
 
+def compute_window_return_with_details(
+    series: List[Tuple[dt.date, float]], window_days: int
+) -> Tuple[Optional[float], Optional[dt.date], Optional[float], Optional[dt.date], Optional[float]]:
+    if len(series) < 2:
+        return None, None, None, None, None
+    series_sorted = sorted(series, key=lambda x: x[0])
+    end_date, end_value = series_sorted[-1]
+    target_date = end_date - dt.timedelta(days=window_days)
+    start_date, start_value = series_sorted[0]
+    for date_value, nav_value in series_sorted:
+        if date_value <= target_date:
+            start_date, start_value = date_value, nav_value
+        else:
+            break
+    return (
+        annualized_return(start_value, end_value, start_date, end_date),
+        start_date,
+        start_value,
+        end_date,
+        end_value,
+    )
+
+
 def normalize_returns(returns: Dict[str, Optional[float]]) -> Dict[str, float]:
     normalized: Dict[str, float] = {}
     for key in ("1m", "3m", "6m"):

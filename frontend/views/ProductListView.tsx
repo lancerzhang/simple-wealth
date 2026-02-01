@@ -52,9 +52,36 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
   };
 
   const filteredAndSortedProducts = useMemo(() => {
-    let result = products.filter(p => 
-      (p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-       p.code.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    const query = searchTerm.trim().toLowerCase();
+    const getSearchableText = (p: Product) => {
+      const values: Array<string | number | undefined> = [
+        p.name,
+        p.id,
+        p.code,
+        p.type,
+        p.manager,
+        p.issuer,
+        p.currency,
+        p.minHoldDays,
+        p.riskLevel,
+        p.url,
+        p.registrationCode,
+        p.fundCode,
+        p.realProductCode,
+        p.updatedAt,
+        p.returns?.['1m'],
+        p.returns?.['3m'],
+        p.returns?.['6m'],
+      ];
+      if (p.banks) values.push(...p.banks);
+      return values
+        .filter((v) => v !== undefined && v !== null)
+        .join(' ')
+        .toLowerCase();
+    };
+
+    let result = products.filter(p =>
+      (!query || getSearchableText(p).includes(query)) &&
       (!showOnlyFavorites || favorites.includes(p.id))
     );
 
@@ -87,7 +114,7 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
           <div className="relative flex-1">
             <input 
               type="text" 
-              placeholder="搜索产品名称或代码..."
+              placeholder="搜索任意字段：名称 / 代码 / 发行方 / 渠道 / 风险 / 币种 / 更新时间..."
               className="w-full pl-10 pr-4 py-2 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -116,6 +143,10 @@ const ProductListView: React.FC<ProductListViewProps> = ({ products, title, type
             </button>
           </div>
         </div>
+      </div>
+
+      <div className="bg-amber-50 border border-amber-100 text-amber-700 text-sm rounded-2xl p-4">
+        免责声明：数据来自互联网，无法保证完全准确与实时。使用这些数据造成的任何损失，我们概不负责。仅供参考，以各产品官网披露为准。
       </div>
 
       {/* Grid */}

@@ -67,6 +67,10 @@ const Home: React.FC = () => {
           前往 GitHub 贡献
         </button>
       </div>
+
+      <div className="bg-amber-50 border border-amber-100 text-amber-700 text-sm rounded-2xl p-5">
+        免责声明：本网站数据来源于互联网公开信息，可能存在延迟或误差，不保证完全准确与实时。使用本网站数据造成的任何损失，本站不承担责任。仅供参考，具体以各产品官网披露为准。
+      </div>
     </div>
   );
 };

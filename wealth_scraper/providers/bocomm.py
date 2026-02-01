@@ -7,7 +7,8 @@ from urllib.parse import parse_qs, quote, urlparse
 
 from ..config import BOCOMM_BANK_OVERRIDES, BOCOMM_CODE_OVERRIDES, BOCOMM_MIN_HOLD_OVERRIDES
 from ..http import fetch_json
-from ..utils import compute_window_return, normalize_returns, parse_date, parse_min_hold_days
+from ..logger import debug_log
+from ..utils import compute_window_return_with_details, normalize_returns, parse_date, parse_min_hold_days
 
 
 def _post(endpoint: str, body: Dict) -> Dict:
@@ -44,8 +45,16 @@ def fetch(url: str) -> Dict:
         value = float(str(ratio).replace("%", ""))
         if time_key == "3":
             returns["1m"] = value
+            debug_log(
+                f"[calc][bocomm] {fund_code} 1m from yield "
+                f"yieldratio={value} start={item.get('yieldstartdate')} end={item.get('yieldexpiredate')}"
+            )
         elif time_key == "4":
             returns["3m"] = value
+            debug_log(
+                f"[calc][bocomm] {fund_code} 3m from yield "
+                f"yieldratio={value} start={item.get('yieldstartdate')} end={item.get('yieldexpiredate')}"
+            )
 
     break_data = _post(
         "queryJylcBreakDetail.do",
@@ -60,12 +69,27 @@ def fetch(url: str) -> Dict:
             series.append((date_value, float(nav_value)))
 
     if returns["6m"] is None:
-        returns["6m"] = compute_window_return(series, 180)
+        value, start_date, start_value, end_date, end_value = compute_window_return_with_details(series, 180)
+        returns["6m"] = value
+        debug_log(
+            f"[calc][bocomm] {fund_code} 6m from NAV "
+            f"start={start_date} nav={start_value} end={end_date} nav={end_value} -> {value}"
+        )
 
     if returns["1m"] is None:
-        returns["1m"] = compute_window_return(series, 30)
+        value, start_date, start_value, end_date, end_value = compute_window_return_with_details(series, 30)
+        returns["1m"] = value
+        debug_log(
+            f"[calc][bocomm] {fund_code} 1m from NAV "
+            f"start={start_date} nav={start_value} end={end_date} nav={end_value} -> {value}"
+        )
     if returns["3m"] is None:
-        returns["3m"] = compute_window_return(series, 90)
+        value, start_date, start_value, end_date, end_value = compute_window_return_with_details(series, 90)
+        returns["3m"] = value
+        debug_log(
+            f"[calc][bocomm] {fund_code} 3m from NAV "
+            f"start={start_date} nav={start_value} end={end_date} nav={end_value} -> {value}"
+        )
 
     banks = BOCOMM_BANK_OVERRIDES.get(fund_code) or [product.get("c_agencyno") or "交通银行"]
     min_hold_days = BOCOMM_MIN_HOLD_OVERRIDES.get(fund_code) or parse_min_hold_days(product.get("c_fundname") or "")
