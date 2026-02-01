@@ -14,20 +14,6 @@ USER_AGENT = (
 
 WEALTHCCB_BANKS = ["建设银行"]
 WEALTHCCB_ISSUER = "建信理财"
-WEALTHCCB_FALLBACKS = {
-    "https://www.wealthccb.com/product/11.html": {
-        "name": "建信理财“安鑫”（最低持有360天）按日开放固定收益类净值型人民币理财产品",
-        "code": "JXQYAX360D2018202",
-        "issuer": WEALTHCCB_ISSUER,
-        "banks": WEALTHCCB_BANKS,
-        "currency": "人民币",
-        "minHoldDays": 360,
-        "riskLevel": "R2",
-        "returns": {"1m": 0.0, "3m": 0.0, "6m": 0.0},
-        "notes": "source_missing",
-        "type": "wealth",
-    }
-}
 
 BOCOMM_MIN_HOLD_OVERRIDES = {
     "5811225149": 90,

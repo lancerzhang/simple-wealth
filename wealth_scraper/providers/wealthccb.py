@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import re
 from typing import Dict, List, Tuple
-from urllib.error import HTTPError
 
-from ..config import WEALTHCCB_BANKS, WEALTHCCB_FALLBACKS, WEALTHCCB_ISSUER
+from ..config import WEALTHCCB_BANKS, WEALTHCCB_ISSUER
 from ..http import http_fetch
 from ..utils import compute_return_from_series, normalize_returns, parse_date, parse_min_hold_days
 
@@ -89,20 +88,6 @@ def parse_html(html: str, url: str) -> Dict:
 
 
 def fetch(url: str) -> Dict:
-    try:
-        html = http_fetch(url).text
-    except HTTPError:
-        fallback = WEALTHCCB_FALLBACKS.get(url)
-        if fallback:
-            result = dict(fallback)
-            result["url"] = url
-            return result
-        raise
+    html = http_fetch(url).text
     parsed = parse_html(html, url)
-    if not parsed.get("name") or not parsed.get("code"):
-        fallback = WEALTHCCB_FALLBACKS.get(url)
-        if fallback:
-            result = dict(fallback)
-            result["url"] = url
-            return result
     return parsed

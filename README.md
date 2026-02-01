@@ -49,7 +49,7 @@ WEALTH_HTTP_RETRIES=5 WEALTH_HTTP_RETRY_BACKOFF=1.2 python3 scripts/wealth_scrap
 WEALTH_DEBUG=1 python3 scripts/wealth_scraper.py
 ```
 
-遇到单个链接失败仍然继续（并在结果中标记失败）：
+遇到单个链接失败仍然继续（只记录日志，不写入结果）：
 ```
 WEALTH_CONTINUE_ON_ERROR=1 python3 scripts/wealth_scraper.py
 ```

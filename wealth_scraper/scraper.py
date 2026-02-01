@@ -50,18 +50,6 @@ def scrape_all(urls: Iterable[str]) -> List[Dict]:
         except Exception as exc:
             if os.environ.get("WEALTH_CONTINUE_ON_ERROR") == "1":
                 print(f"[scrape] failed for {url}: {exc}", file=sys.stderr, flush=True)
-                products.append(
-                    {
-                        "id": build_product_id({"code": f"error-{index}"}, index),
-                        "name": "抓取失败",
-                        "code": f"error-{index}",
-                        "returns": {"1m": 0.0, "3m": 0.0, "6m": 0.0},
-                        "banks": [],
-                        "type": "wealth",
-                        "url": url,
-                        "notes": f"error: {exc}",
-                    }
-                )
                 continue
             raise
     return products
