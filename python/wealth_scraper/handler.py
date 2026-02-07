@@ -1,42 +1,27 @@
+"""Backward-compatible Lambda entry point (uses env paths)."""
+
 from __future__ import annotations
 
 import os
-from pathlib import Path
-
 from .config import (
     DEFAULT_FUND_LINKS,
     DEFAULT_FUND_OUTPUT,
     DEFAULT_WEALTH_LINKS,
     DEFAULT_WEALTH_OUTPUT,
 )
-from .scraper import load_links, scrape_all, write_json
+from .run import run_scrape
 
 
 def lambda_handler(event, context):
-    wealth_links_path = Path(os.environ.get("WEALTH_LINKS_PATH", DEFAULT_WEALTH_LINKS))
-    wealth_output_path = Path(os.environ.get("WEALTH_OUTPUT_PATH", "/tmp/wealth.json"))
-    fund_links_path = Path(os.environ.get("FUND_LINKS_PATH", DEFAULT_FUND_LINKS))
-    fund_output_path = Path(os.environ.get("FUND_OUTPUT_PATH", "/tmp/fund.json"))
+    evt = event or {}
+    wealth_links = evt.get("wealth_links") or os.environ.get("WEALTH_LINKS_PATH") or DEFAULT_WEALTH_LINKS
+    fund_links = evt.get("fund_links") or os.environ.get("FUND_LINKS_PATH") or DEFAULT_FUND_LINKS
+    wealth_output = evt.get("wealth_output") or os.environ.get("WEALTH_OUTPUT_PATH") or DEFAULT_WEALTH_OUTPUT
+    fund_output = evt.get("fund_output") or os.environ.get("FUND_OUTPUT_PATH") or DEFAULT_FUND_OUTPUT
 
-    wealth_urls = load_links(wealth_links_path)
-    wealth_products, wealth_failures = scrape_all(wealth_urls)
-    write_json(wealth_output_path, wealth_products)
-
-    fund_urls = load_links(fund_links_path)
-    fund_products, fund_failures = scrape_all(fund_urls)
-    write_json(fund_output_path, fund_products)
-
-    return {
-        "wealth": {
-            "count": len(wealth_products),
-            "failed": len(wealth_failures),
-            "failures": [{"url": url, "error": err} for url, err in wealth_failures],
-            "output": str(wealth_output_path),
-        },
-        "fund": {
-            "count": len(fund_products),
-            "failed": len(fund_failures),
-            "failures": [{"url": url, "error": err} for url, err in fund_failures],
-            "output": str(fund_output_path),
-        },
-    }
+    return run_scrape(
+        wealth_links=wealth_links,
+        fund_links=fund_links,
+        wealth_output=wealth_output,
+        fund_output=fund_output,
+    )

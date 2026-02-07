@@ -78,10 +78,9 @@ WEALTH_SSL_NO_VERIFY=1 python3 python/scripts/wealth_scraper.py
 ### 一键部署
 脚本：`python/deploy_lambda.sh`
 
-最小用法（首次创建函数需要角色 ARN）：
+最小用法（首次创建函数需要角色 ARN，需有写 S3 bucket `simple-wealth-cn` 权限）：
 ```
-export AWS_REGION=ap-east-1
-export LAMBDA_ROLE_ARN=arn:aws:iam::123456789012:role/your-lambda-role
+export AWS_REGION=ap-southeast-1
 ./python/deploy_lambda.sh
 ```
 
@@ -89,18 +88,60 @@ export LAMBDA_ROLE_ARN=arn:aws:iam::123456789012:role/your-lambda-role
 ```
 export LAMBDA_FUNCTION_NAME=wealth-scraper
 export LAMBDA_RUNTIME=python3.11
-export LAMBDA_HANDLER=wealth_scraper.handler.lambda_handler
+export LAMBDA_HANDLER=scripts/wealth_scraper.lambda_handler
 export LAMBDA_TIMEOUT=60
 export LAMBDA_MEMORY=256
-export SCHEDULE_EXPRESSION="cron(0 1 * * ? *)"  # 香港时间 09:00
+export SCHEDULE_EXPRESSION="cron(0 0 * * ? *)"  # 08:00 SGT
+export S3_BUCKET=simple-wealth-cn
+export S3_PREFIX=data
+export LAMBDA_ROLE_ARN=arn:aws:iam::123456789012:role/your-lambda-role  # 若不设，脚本会尝试创建 ROLE_NAME 并赋予 S3 写权限
+export LAMBDA_ROLE_NAME=wealth-scraper-role  # 脚本自动创建用
 ```
 
 脚本会自动：
 - 安装 `python/requirements.txt` 到打包目录
 - 打包并更新/创建 Lambda
-- 创建 EventBridge 定时触发
+- 创建 EventBridge 定时触发（默认每日 08:00 SGT 上传到 S3）
 
 ### Lambda 环境变量
 - `WEALTH_LINKS_PATH`（默认：`data/wealth_links.txt`）
 - `FUND_LINKS_PATH`（默认：`data/fund_links.txt`）
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
+
+### 阿里云 FC 部署
+脚本：`python/deploy_aliyun.sh`
+
+最小用法（需已登录 aliyun CLI，Service 绑定有 OSS 读写权限的 RAM 角色，默认 bucket `simple-wealth-cn`，region `cn-hongkong`）：
+```
+export ALI_FC_ROLE=acs:ram::1234567890:role/your-fc-role-with-oss
+./python/deploy_aliyun.sh
+```
+
+可选参数：
+```
+export ALI_REGION=cn-hongkong
+export ALI_FC_SERVICE=simple-wealth
+export ALI_FC_FUNCTION=wealth-scraper
+export ALI_FC_CRON="0 0 0 * * *"     # 08:00 CST
+export ALI_OSS_BUCKET=simple-wealth-cn
+export ALI_OSS_PREFIX=data
+```
+
+环境变量（FC）：
+- `WEALTH_LINKS_PATH`（默认：`data/wealth_links.txt`）
+- `FUND_LINKS_PATH`（默认：`data/fund_links.txt`）
+- `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
+- `FUND_OUTPUT_PATH`（默认：`/tmp/fund.json`）
+- `OSS_BUCKET` / `OSS_PREFIX` / `OSS_REGION`
+
+## CLI 登录速查
+
+- AWS CLI（v2）  
+  1. 安装 awscli v2。  
+  2. 配置凭证：`aws configure`（Access Key/Secret/region 默认 `ap-southeast-1`），或使用 SSO：`aws configure sso`。  
+  3. 如果用 profile，运行脚本前设置 `AWS_PROFILE=your-profile`（或在 `~/.aws/config` 里设默认）。  
+
+- 阿里云 CLI（aliyun）  
+  1. 安装 aliyun CLI。  
+  2. 配置访问密钥：`aliyun configure set --access-key-id <AK> --access-key-secret <SK> --region cn-hongkong`，或使用临时 STS：`aliyun configure set --mode StsToken --access-key-id <AK> --access-key-secret <SK> --sts-token <TOKEN> --region cn-hongkong`。  
+  3. 若使用多个账户，可加 `--profile myprof` 并在脚本前导出 `ALICLOUD_PROFILE=myprof`。  
