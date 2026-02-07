@@ -39,7 +39,8 @@ if [[ "$SKIP_PIP_INSTALL" != "1" ]] && grep -Eqv '^\s*(#|$)' requirements.txt; t
 fi
 
 cp -R wealth_scraper "$BUILD_DIR/"
-cp data/product_links.txt "$BUILD_DIR/data/product_links.txt"
+cp data/wealth_links.txt "$BUILD_DIR/data/wealth_links.txt"
+cp data/fund_links.txt "$BUILD_DIR/data/fund_links.txt"
 cp requirements.txt "$BUILD_DIR/requirements.txt"
 cp scripts/wealth_scraper.py "$BUILD_DIR/scripts/wealth_scraper.py"
 
@@ -59,7 +60,7 @@ if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >
     --runtime "$RUNTIME" \
     --timeout "$TIMEOUT" \
     --memory-size "$MEMORY" \
-    --environment "Variables={WEALTH_LINKS_PATH=data/product_links.txt,WEALTH_OUTPUT_PATH=/tmp/wealth.json}" \
+    --environment "Variables={WEALTH_LINKS_PATH=data/wealth_links.txt,WEALTH_OUTPUT_PATH=/tmp/wealth.json,FUND_LINKS_PATH=data/fund_links.txt,FUND_OUTPUT_PATH=/tmp/fund.json}" \
     --region "$REGION" >/dev/null
 else
   if [[ -z "${LAMBDA_ROLE_ARN:-}" ]]; then
@@ -75,7 +76,7 @@ else
     --zip-file "fileb://${ZIP_PATH}" \
     --timeout "$TIMEOUT" \
     --memory-size "$MEMORY" \
-    --environment "Variables={WEALTH_LINKS_PATH=data/product_links.txt,WEALTH_OUTPUT_PATH=/tmp/wealth.json}" \
+    --environment "Variables={WEALTH_LINKS_PATH=data/wealth_links.txt,WEALTH_OUTPUT_PATH=/tmp/wealth.json,FUND_LINKS_PATH=data/fund_links.txt,FUND_OUTPUT_PATH=/tmp/fund.json}" \
     --region "$REGION" >/dev/null
 fi
 

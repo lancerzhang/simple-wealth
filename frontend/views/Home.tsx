@@ -37,14 +37,24 @@ const Home: React.FC = () => {
               数据文件对外开放，欢迎用 AI 读取、分析或做可视化研究。示例数据如下：
             </p>
             <div className="mt-3">
-              <a
-                href="https://simple-wealth-cn.s3.ap-southeast-1.amazonaws.com/data/wealth.json"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-2 bg-gray-50 text-gray-700 rounded-xl text-xs font-mono hover:bg-gray-100"
-              >
-                wealth.json 数据文件
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://simple-wealth-cn.s3.ap-southeast-1.amazonaws.com/data/wealth.json"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-2 bg-gray-50 text-gray-700 rounded-xl text-xs font-mono hover:bg-gray-100"
+                >
+                  wealth.json 理财数据
+                </a>
+                <a
+                  href="https://simple-wealth-cn.s3.ap-southeast-1.amazonaws.com/data/fund.json"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-2 bg-gray-50 text-gray-700 rounded-xl text-xs font-mono hover:bg-gray-100"
+                >
+                  fund.json 基金数据
+                </a>
+              </div>
             </div>
           </div>
 
@@ -57,14 +67,24 @@ const Home: React.FC = () => {
               请提交 commit 到产品链接清单，我们会根据链接更新数据。
             </p>
             <div className="mt-3">
-              <a
-                href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/product_links.txt"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-mono hover:bg-emerald-100"
-              >
-                product_links.txt
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/wealth_links.txt"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-mono hover:bg-emerald-100"
+                >
+                  wealth_links.txt（理财）
+                </a>
+                <a
+                  href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/fund_links.txt"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-mono hover:bg-emerald-100"
+                >
+                  fund_links.txt（基金）
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ npm run build
 ## 数据抓取（理财产品）
 
 ### 链接配置
-产品链接在 `python/data/product_links.txt`，按行放 URL。
+理财链接在 `python/data/wealth_links.txt`，基金链接在 `python/data/fund_links.txt`，按行放 URL。
 
 ### 本地运行
 1) 安装依赖（用于 SSL 证书）：
@@ -36,7 +36,7 @@ python3 python/scripts/wealth_scraper.py
 
 如需指定路径：
 ```
-python3 python/scripts/wealth_scraper.py --links python/data/product_links.txt --output frontend/public/data/wealth.json
+python3 python/scripts/wealth_scraper.py --wealth-links python/data/wealth_links.txt --wealth-output frontend/public/data/wealth.json --fund-links python/data/fund_links.txt --fund-output frontend/public/data/fund.json
 ```
 
 ### SSL 证书问题（macOS 常见）
@@ -101,5 +101,6 @@ export SCHEDULE_EXPRESSION="cron(0 1 * * ? *)"  # 香港时间 09:00
 - 创建 EventBridge 定时触发
 
 ### Lambda 环境变量
-- `WEALTH_LINKS_PATH`（默认：`data/product_links.txt`）
+- `WEALTH_LINKS_PATH`（默认：`data/wealth_links.txt`）
+- `FUND_LINKS_PATH`（默认：`data/fund_links.txt`）
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）

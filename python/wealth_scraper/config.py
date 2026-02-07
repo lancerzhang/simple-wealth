@@ -4,8 +4,14 @@ from pathlib import Path
 
 PYTHON_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_LINKS = PYTHON_DIR / "data" / "product_links.txt"
-DEFAULT_OUTPUT = REPO_ROOT / "frontend" / "public" / "data" / "wealth.json"
+
+# Data files
+DEFAULT_WEALTH_LINKS = PYTHON_DIR / "data" / "wealth_links.txt"
+DEFAULT_FUND_LINKS = PYTHON_DIR / "data" / "fund_links.txt"
+
+# Outputs
+DEFAULT_WEALTH_OUTPUT = REPO_ROOT / "frontend" / "public" / "data" / "wealth.json"
+DEFAULT_FUND_OUTPUT = REPO_ROOT / "frontend" / "public" / "data" / "fund.json"
 
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
