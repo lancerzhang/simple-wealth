@@ -57,48 +57,54 @@ fi
 npm run build >/dev/null
 cd "$ROOT_DIR"
 
-# Upload code package to OSS (required before create/update) - force overwrite
-aliyun oss cp "$ZIP_PATH" "oss://${OSS_BUCKET}/${OSS_PREFIX}/fc/${FUNCTION_NAME}.zip" --region "$REGION" -f
+# Upload code package to OSS (required before create/update)
+aliyun oss cp "$ZIP_PATH" "oss://${OSS_BUCKET}/${OSS_PREFIX}/fc/${FUNCTION_NAME}.zip" --region "$REGION"
 
 # Clean remote assets and sync static site
 aliyun oss rm "oss://${OSS_BUCKET}/assets/" --recursive --force --region "$REGION" || true
 aliyun oss cp "${FRONTEND_DIR}/dist/" "oss://${OSS_BUCKET}/" --recursive --force --region "$REGION" --exclude ".DS_Store"
 
-# Check if service exists by trying to get functions list
-SERVICE_EXISTS=false
-if aliyun fc-open GET /2021-04-06/services/$SERVICE_NAME/functions --region "$REGION" >/dev/null 2>&1; then
-  SERVICE_EXISTS=true
-fi
-
 # Create service if missing
-if [ "$SERVICE_EXISTS" = false ]; then
-  echo "Creating service: $SERVICE_NAME"
-  aliyun fc-open POST /2021-04-06/services --body '{"serviceName":"'$SERVICE_NAME'","role":"'"${ALI_FC_ROLE:-}"'"}' --region "$REGION"
+if ! aliyun fc list-functions --service-name "$SERVICE_NAME" --region "$REGION" >/dev/null 2>&1; then
+  aliyun fc create-service --service-name "$SERVICE_NAME" --role "${ALI_FC_ROLE:-}" --region "$REGION"
 fi
 
 # Create or update function
-FUNCTION_EXISTS=false
-if aliyun fc-open GET /2021-04-06/services/$SERVICE_NAME/functions/$FUNCTION_NAME --region "$REGION" >/dev/null 2>&1; then
-  FUNCTION_EXISTS=true
-fi
-
-if [ "$FUNCTION_EXISTS" = true ]; then
-  echo "Updating function: $FUNCTION_NAME"
-  aliyun fc-open PUT /2021-04-06/services/$SERVICE_NAME/functions/$FUNCTION_NAME \
-    --body '{"handler":"scripts/wealth_scraper.handler","runtime":"python3","memorySize":256,"timeout":60,"code":{"ossBucketName":"'$OSS_BUCKET'","ossObjectName":"'$OSS_PREFIX'/fc/'$FUNCTION_NAME'.zip"},"environmentVariables":{"WEALTH_LINKS_PATH":"'$WEALTH_LINKS_PATH'","FUND_LINKS_PATH":"'$FUND_LINKS_PATH'","WEALTH_OUTPUT_PATH":"'$WEALTH_OUTPUT_PATH'","FUND_OUTPUT_PATH":"'$FUND_OUTPUT_PATH'","OSS_BUCKET":"'$OSS_BUCKET'","OSS_PREFIX":"'$OSS_PREFIX'","OSS_REGION":"'$REGION'"}}' \
-    --region "$REGION" >/dev/null
+if aliyun fc get-function --service-name "$SERVICE_NAME" --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1; then
+  aliyun fc update-function \
+    --service-name "$SERVICE_NAME" \
+    --function-name "$FUNCTION_NAME" \
+    --region "$REGION" \
+    --handler "scripts/wealth_scraper.handler" \
+    --runtime "python3" \
+    --memory-size 256 \
+    --timeout 60 \
+    --code-bucket "$OSS_BUCKET" \
+    --code-object "${OSS_PREFIX}/fc/${FUNCTION_NAME}.zip" \
+    --environment-variables "WEALTH_LINKS_PATH=${WEALTH_LINKS_PATH},FUND_LINKS_PATH=${FUND_LINKS_PATH},WEALTH_OUTPUT_PATH=${WEALTH_OUTPUT_PATH},FUND_OUTPUT_PATH=${FUND_OUTPUT_PATH},OSS_BUCKET=${OSS_BUCKET},OSS_PREFIX=${OSS_PREFIX},OSS_REGION=${REGION}" \
+    >/dev/null
 else
-  echo "Creating function: $FUNCTION_NAME"
-  aliyun fc-open POST /2021-04-06/services/$SERVICE_NAME/functions \
-    --body '{"functionName":"'$FUNCTION_NAME'","handler":"scripts/wealth_scraper.handler","runtime":"python3","memorySize":256,"timeout":60,"code":{"ossBucketName":"'$OSS_BUCKET'","ossObjectName":"'$OSS_PREFIX'/fc/'$FUNCTION_NAME'.zip"},"environmentVariables":{"WEALTH_LINKS_PATH":"'$WEALTH_LINKS_PATH'","FUND_LINKS_PATH":"'$FUND_LINKS_PATH'","WEALTH_OUTPUT_PATH":"'$WEALTH_OUTPUT_PATH'","FUND_OUTPUT_PATH":"'$FUND_OUTPUT_PATH'","OSS_BUCKET":"'$OSS_BUCKET'","OSS_PREFIX":"'$OSS_PREFIX'","OSS_REGION":"'$REGION'"}}' \
-    --region "$REGION" >/dev/null
+  aliyun fc create-function \
+    --service-name "$SERVICE_NAME" \
+    --function-name "$FUNCTION_NAME" \
+    --region "$REGION" \
+    --handler "scripts/wealth_scraper.handler" \
+    --runtime "python3" \
+    --memory-size 256 \
+    --timeout 60 \
+    --code-bucket "$OSS_BUCKET" \
+    --code-object "${OSS_PREFIX}/fc/${FUNCTION_NAME}.zip" \
+    --environment-variables "WEALTH_LINKS_PATH=${WEALTH_LINKS_PATH},FUND_LINKS_PATH=${FUND_LINKS_PATH},WEALTH_OUTPUT_PATH=${WEALTH_OUTPUT_PATH},FUND_OUTPUT_PATH=${FUND_OUTPUT_PATH},OSS_BUCKET=${OSS_BUCKET},OSS_PREFIX=${OSS_PREFIX},OSS_REGION=${REGION}" \
+    >/dev/null
 fi
 
 # Create/Update timed trigger (CRON uses UTC in FC; set via env)
-echo "Setting up trigger: $SCHEDULE_NAME"
-# Create trigger config JSON properly escaped
-TRIGGER_CONFIG="{\\\"payload\\\":\\\"{}\\\",\\\"cronExpression\\\":\\\"$CRON_EXPR\\\",\\\"enable\\\":true}"
-TRIGGER_BODY="{\"triggerName\":\"$SCHEDULE_NAME\",\"triggerType\":\"timer\",\"triggerConfig\":\"$TRIGGER_CONFIG\"}"
-aliyun fc-open POST /2021-04-06/services/$SERVICE_NAME/functions/$FUNCTION_NAME/triggers --body "$TRIGGER_BODY" --region "$REGION"
+aliyun fc put-trigger \
+  --service-name "$SERVICE_NAME" \
+  --function-name "$FUNCTION_NAME" \
+  --trigger-name "$SCHEDULE_NAME" \
+  --trigger-type timer \
+  --trigger-config "{\"payload\":\"{}\",\"cronExpression\":\"${CRON_EXPR}\",\"enable\":true}" \
+  --region "$REGION"
 
 echo "Aliyun FC deployed: ${SERVICE_NAME}/${FUNCTION_NAME} (region ${REGION}), cron=${CRON_EXPR}"
