@@ -78,30 +78,16 @@ WEALTH_SSL_NO_VERIFY=1 python3 python/scripts/wealth_scraper.py
 ### 一键部署
 脚本：`python/deploy_lambda.sh`
 
-最小用法（首次创建函数需要角色 ARN，需有写 S3 bucket `simple-wealth-cn` 权限）：
+最小用法（全部硬编码，region/bucket/prefix 已写死，默认跳过 pip）：
 ```
-export AWS_REGION=ap-southeast-1
 ./python/deploy_lambda.sh
 ```
 
-可选参数：
-```
-export LAMBDA_FUNCTION_NAME=wealth-scraper
-export LAMBDA_RUNTIME=python3.11
-export LAMBDA_HANDLER=scripts/wealth_scraper.lambda_handler
-export LAMBDA_TIMEOUT=60
-export LAMBDA_MEMORY=256
-export SCHEDULE_EXPRESSION="cron(0 0 * * ? *)"  # 08:00 SGT
-export S3_BUCKET=simple-wealth-cn
-export S3_PREFIX=data
-export LAMBDA_ROLE_ARN=arn:aws:iam::123456789012:role/your-lambda-role  # 若不设，脚本会尝试创建 ROLE_NAME 并赋予 S3 写权限
-export LAMBDA_ROLE_NAME=wealth-scraper-role  # 脚本自动创建用
-```
-
-脚本会自动：
-- 安装 `python/requirements.txt` 到打包目录
-- 打包并更新/创建 Lambda
-- 创建 EventBridge 定时触发（默认每日 08:00 SGT 上传到 S3）
+说明：
+- region: `ap-southeast-1`，函数名 `wealth-scraper`，bucket `simple-wealth-cn`，前缀 `data`，每日 08:00 SGT 触发。
+- 角色：脚本自动创建/复用 `wealth-scraper-role` 并附加基本执行 + S3 写权限。
+- 若需强制安装依赖再打包，运行 `SKIP_PIP_INSTALL=0 ./python/deploy_lambda.sh`。
+- 前端：脚本每次 `npm ci && npm run build`，上传 `frontend/dist` 到 S3 根目录（先清空远端 `assets/`，再 `sync --delete`），保证 `index.html` 与静态资源一起更新。
 
 ### Lambda 环境变量
 - `WEALTH_LINKS_PATH`（默认：`data/wealth_links.txt`）
@@ -133,6 +119,7 @@ export ALI_OSS_PREFIX=data
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
 - `FUND_OUTPUT_PATH`（默认：`/tmp/fund.json`）
 - `OSS_BUCKET` / `OSS_PREFIX` / `OSS_REGION`
+静态站点同步：会清空远端 `assets/` 后，将本地 `frontend/dist` 递归上传至 OSS 根目录。
 
 ## CLI 登录速查
 

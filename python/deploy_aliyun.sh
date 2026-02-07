@@ -18,6 +18,7 @@ FUND_OUTPUT_PATH="${ALI_FUND_OUTPUT:-/tmp/fund.json}"
 
 OSS_BUCKET="${ALI_OSS_BUCKET:-simple-wealth-cn}"
 OSS_PREFIX="${ALI_OSS_PREFIX:-data}"
+FRONTEND_DIR="$(cd "$(dirname "$0")/.." && pwd)/frontend"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 ZIP_DIR="$(cd "$(dirname "$0")" && pwd)/../dist"
@@ -45,8 +46,22 @@ cd "$BUILD_DIR"
 zip -r "$ZIP_PATH" . -x "**/__pycache__/*" "**/*.pyc" "**/.DS_Store" >/dev/null
 cd "$ROOT_DIR"
 
+# Build frontend (always rebuild)
+cd "$FRONTEND_DIR"
+if [[ -f package-lock.json ]]; then
+  npm ci >/dev/null
+else
+  npm install >/dev/null
+fi
+npm run build >/dev/null
+cd "$ROOT_DIR"
+
 # Upload code package to OSS (required before create/update)
 aliyun oss cp "$ZIP_PATH" "oss://${OSS_BUCKET}/${OSS_PREFIX}/fc/${FUNCTION_NAME}.zip" --region "$REGION"
+
+# Clean remote assets and sync static site
+aliyun oss rm "oss://${OSS_BUCKET}/assets/" --recursive --force --region "$REGION" || true
+aliyun oss cp "${FRONTEND_DIR}/dist/" "oss://${OSS_BUCKET}/" --recursive --force --region "$REGION" --exclude ".DS_Store"
 
 # Create service if missing
 if ! aliyun fc list-functions --service-name "$SERVICE_NAME" --region "$REGION" >/dev/null 2>&1; then
