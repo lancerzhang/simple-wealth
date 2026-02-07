@@ -97,7 +97,7 @@ WEALTH_SSL_NO_VERIFY=1 python3 python/scripts/wealth_scraper.py
 ### 阿里云 FC 部署
 脚本：`python/deploy_aliyun.sh`
 
-最小用法（需已登录 aliyun CLI，Service 绑定有 OSS 读写权限的 RAM 角色，默认 bucket `simple-wealth-cn`，region `cn-hongkong`）：
+最小用法（需已登录 aliyun CLI，Service 绑定有 OSS 读写权限的 RAM 角色，默认 bucket `simple-wealth-cn`，region `cn-guangzhou`）：
 ```
 export ALI_FC_ROLE=acs:ram::1234567890:role/your-fc-role-with-oss
 ./python/deploy_aliyun.sh
@@ -105,7 +105,7 @@ export ALI_FC_ROLE=acs:ram::1234567890:role/your-fc-role-with-oss
 
 可选参数：
 ```
-export ALI_REGION=cn-hongkong
+export ALI_REGION=cn-guangzhou
 export ALI_FC_SERVICE=simple-wealth
 export ALI_FC_FUNCTION=wealth-scraper
 export ALI_FC_CRON="0 0 0 * * *"     # 08:00 CST
@@ -121,6 +121,8 @@ export ALI_OSS_PREFIX=data
 - `OSS_BUCKET` / `OSS_PREFIX` / `OSS_REGION`
 静态站点同步：会清空远端 `assets/` 后，将本地 `frontend/dist` 递归上传至 OSS 根目录。
 
+阿里云脚本现已硬编码：region `cn-guangzhou`，Service `simple-wealth`，Function `wealth-scraper`，bucket `simple-wealth-cn`，前缀 `data`，每日 08:00 CST 触发。无需额外参数，直接运行 `./python/deploy_aliyun.sh`。
+
 ## CLI 登录速查
 
 - AWS CLI（v2）  
@@ -130,5 +132,5 @@ export ALI_OSS_PREFIX=data
 
 - 阿里云 CLI（aliyun）  
   1. 安装 aliyun CLI。  
-  2. 配置访问密钥：`aliyun configure set --access-key-id <AK> --access-key-secret <SK> --region cn-hongkong`，或使用临时 STS：`aliyun configure set --mode StsToken --access-key-id <AK> --access-key-secret <SK> --sts-token <TOKEN> --region cn-hongkong`。  
+  2. 配置访问密钥：`aliyun configure set --access-key-id <AK> --access-key-secret <SK> --region cn-guangzhou`，或使用临时 STS：`aliyun configure set --mode StsToken --access-key-id <AK> --access-key-secret <SK> --sts-token <TOKEN> --region cn-guangzhou`。  
   3. 若使用多个账户，可加 `--profile myprof` 并在脚本前导出 `ALICLOUD_PROFILE=myprof`。  

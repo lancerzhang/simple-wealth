@@ -4,20 +4,21 @@ set -euo pipefail
 # Deploy wealth scraper to Aliyun Function Compute (FC)
 # Requirements: ali/aliyun CLI logged in with permissions for FC + RAM + OSS
 
-REGION="${ALI_REGION:-cn-hongkong}"
-SERVICE_NAME="${ALI_FC_SERVICE:-simple-wealth}"
-FUNCTION_NAME="${ALI_FC_FUNCTION:-wealth-scraper}"
-SCHEDULE_NAME="${ALI_FC_SCHEDULE:-wealth-scraper-daily}"  # timer trigger name
+REGION="cn-guangzhou"
+FC_ENDPOINT=""
+SERVICE_NAME="simple-wealth"
+FUNCTION_NAME="wealth-scraper"
+SCHEDULE_NAME="wealth-scraper-daily"  # timer trigger name
 # FC cron is UTC; 08:00 CST == 00:00 UTC
-CRON_EXPR="${ALI_FC_CRON:-0 0 0 * * *}"
+CRON_EXPR="0 0 0 * * *"
 
-WEALTH_LINKS_PATH="${ALI_WEALTH_LINKS:-data/wealth_links.txt}"
-FUND_LINKS_PATH="${ALI_FUND_LINKS:-data/fund_links.txt}"
-WEALTH_OUTPUT_PATH="${ALI_WEALTH_OUTPUT:-/tmp/wealth.json}"
-FUND_OUTPUT_PATH="${ALI_FUND_OUTPUT:-/tmp/fund.json}"
+WEALTH_LINKS_PATH="data/wealth_links.txt"
+FUND_LINKS_PATH="data/fund_links.txt"
+WEALTH_OUTPUT_PATH="/tmp/wealth.json"
+FUND_OUTPUT_PATH="/tmp/fund.json"
 
-OSS_BUCKET="${ALI_OSS_BUCKET:-simple-wealth-cn}"
-OSS_PREFIX="${ALI_OSS_PREFIX:-data}"
+OSS_BUCKET="simple-wealth"
+OSS_PREFIX="data"
 FRONTEND_DIR="$(cd "$(dirname "$0")/.." && pwd)/frontend"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"

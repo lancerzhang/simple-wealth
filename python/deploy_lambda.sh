@@ -138,6 +138,7 @@ if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >
     --zip-file "fileb://${ZIP_PATH}" \
     --region "$REGION" >/dev/null
 
+  wait_ready "$FUNCTION_NAME"
   aws lambda update-function-configuration \
     --function-name "$FUNCTION_NAME" \
     --handler "$HANDLER" \
