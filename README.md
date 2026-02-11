@@ -94,6 +94,11 @@ WEALTH_SSL_NO_VERIFY=1 python3 python/scripts/wealth_scraper.py
 - `FUND_LINKS_PATH`（默认：`data/fund_links.txt`）
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
 
+### Lambda 手动触发（单行命令）
+```
+aws lambda invoke --function-name wealth-scraper --region ap-southeast-1 --cli-binary-format raw-in-base64-out --payload '{}' /tmp/wealth-scraper-lambda.json && cat /tmp/wealth-scraper-lambda.json
+```
+
 ### 阿里云 FC 部署
 脚本：`python/deploy_aliyun.sh`
 
@@ -122,6 +127,16 @@ export ALI_OSS_PREFIX=data
 静态站点同步：会清空远端 `assets/` 后，将本地 `frontend/dist` 递归上传至 OSS 根目录。
 
 阿里云脚本现已硬编码：region `cn-shenzhen`，Service `simple-wealth`，Function `wealth-scraper`，bucket `simple-wealth-cn`，前缀 `data`，每日 08:00 CST 触发。无需额外参数，直接运行 `./python/deploy_aliyun.sh`。
+
+### FC 手动触发（单行命令）
+```
+aliyun fc-open POST "/2021-04-06/services/simple-wealth/functions/wealth-scraper/invocations" --body '{}' --region cn-shenzhen
+```
+
+### 同时触发 Lambda + FC（单行命令）
+```
+aws lambda invoke --function-name wealth-scraper --region ap-southeast-1 --cli-binary-format raw-in-base64-out --payload '{}' /tmp/wealth-scraper-lambda.json && aliyun fc-open POST "/2021-04-06/services/simple-wealth/functions/wealth-scraper/invocations" --body '{}' --region cn-shenzhen && cat /tmp/wealth-scraper-lambda.json
+```
 
 ## CLI 登录速查
 

@@ -7,7 +7,14 @@ import datetime as dt
 from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
-from .providers import fetch_bocomm, fetch_cibwm, fetch_spdb, fetch_wealthccb
+from .providers import (
+    fetch_bocomm,
+    fetch_cibwm,
+    fetch_chinawealth,
+    fetch_cmb,
+    fetch_spdb,
+    fetch_wealthccb,
+)
 
 
 def build_product_id(product: Dict, index: int) -> str:
@@ -25,6 +32,10 @@ def scrape_product(url: str) -> Dict:
         return fetch_bocomm(url)
     if "spdb-wm.com" in url:
         return fetch_spdb(url)
+    if "xinxipilu.chinawealth.com.cn" in url:
+        return fetch_chinawealth(url)
+    if "cfweb.paas.cmbchina.com" in url:
+        return fetch_cmb(url)
     raise RuntimeError(f"Unsupported URL: {url}")
 
 
