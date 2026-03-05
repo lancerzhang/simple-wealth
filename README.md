@@ -18,7 +18,12 @@ npm run build
 ## 数据抓取（理财产品）
 
 ### 链接配置
-理财链接在 `python/data/wealth_links.txt`，基金链接在 `python/data/fund_links.txt`，按行放 URL。
+理财链接在 `python/data/wealth_links.json`，基金链接在 `python/data/fund_links.txt`。
+
+`wealth_links.json` 按站点分组，可配置：
+- `scraper`：该站点抓取方式（如 `wealthccb`、`bocomm`）。
+- `retries`：该站点默认重试次数（`www.wealthccb.com` 可单独加大）。
+- `products[].salesChannels`：产品级销售渠道，会写入产出里的 `banks` 字段。
 
 ### 本地运行
 1) 安装依赖（用于 SSL 证书）：
@@ -36,7 +41,7 @@ python3 python/scripts/wealth_scraper.py
 
 如需指定路径：
 ```
-python3 python/scripts/wealth_scraper.py --wealth-links python/data/wealth_links.txt --wealth-output frontend/public/data/wealth.json --fund-links python/data/fund_links.txt --fund-output frontend/public/data/fund.json
+python3 python/scripts/wealth_scraper.py --wealth-links python/data/wealth_links.json --wealth-output frontend/public/data/wealth.json --fund-links python/data/fund_links.txt --fund-output frontend/public/data/fund.json
 ```
 
 ### SSL 证书问题（macOS 常见）
@@ -90,7 +95,7 @@ WEALTH_SSL_NO_VERIFY=1 python3 python/scripts/wealth_scraper.py
 - 前端：脚本每次 `npm ci && npm run build`，上传 `frontend/dist` 到 S3 根目录（先清空远端 `assets/`，再 `sync --delete`），保证 `index.html` 与静态资源一起更新。
 
 ### Lambda 环境变量
-- `WEALTH_LINKS_PATH`（默认：`data/wealth_links.txt`）
+- `WEALTH_LINKS_PATH`（默认：`data/wealth_links.json`）
 - `FUND_LINKS_PATH`（默认：`data/fund_links.txt`）
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
 
@@ -119,7 +124,7 @@ export ALI_OSS_PREFIX=data
 ```
 
 环境变量（FC）：
-- `WEALTH_LINKS_PATH`（默认：`data/wealth_links.txt`）
+- `WEALTH_LINKS_PATH`（默认：`data/wealth_links.json`）
 - `FUND_LINKS_PATH`（默认：`data/fund_links.txt`）
 - `WEALTH_OUTPUT_PATH`（默认：`/tmp/wealth.json`）
 - `FUND_OUTPUT_PATH`（默认：`/tmp/fund.json`）

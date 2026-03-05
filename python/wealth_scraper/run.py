@@ -11,7 +11,7 @@ from .config import (
     DEFAULT_WEALTH_LINKS,
     DEFAULT_WEALTH_OUTPUT,
 )
-from .scraper import load_links, scrape_all, write_json
+from .scraper import load_links, load_targets, scrape_all, write_json
 from .storage import publish_outputs
 
 
@@ -38,10 +38,10 @@ def run_scrape(
 ) -> Dict:
     paths = _build_paths(wealth_links, fund_links, wealth_output, fund_output)
 
-    wealth_urls = load_links(paths["wealth_links"])
+    wealth_targets = load_targets(paths["wealth_links"])
     fund_urls = load_links(paths["fund_links"])
 
-    wealth_products, wealth_failures = scrape_all(wealth_urls)
+    wealth_products, wealth_failures = scrape_all(wealth_targets)
     fund_products, fund_failures = scrape_all(fund_urls)
 
     write_json(paths["wealth_output"], wealth_products)

@@ -26,7 +26,7 @@ jobs:
       - name: Scrape data
         run: |
           python3 python/scripts/wealth_scraper.py \
-            --wealth-links python/data/wealth_links.txt \
+            --wealth-links python/data/wealth_links.json \
             --wealth-output frontend/public/data/wealth.json \
             --fund-links python/data/fund_links.txt \
             --fund-output frontend/public/data/fund.json

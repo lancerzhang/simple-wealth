@@ -24,7 +24,7 @@ from wealth_scraper.run import run_scrape, to_json
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Scrape wealth/fund products and write JSON outputs.")
-    parser.add_argument("--wealth-links", type=Path, default=DEFAULT_WEALTH_LINKS, help="Path to wealth_links.txt")
+    parser.add_argument("--wealth-links", type=Path, default=DEFAULT_WEALTH_LINKS, help="Path to wealth_links.json")
     parser.add_argument("--fund-links", type=Path, default=DEFAULT_FUND_LINKS, help="Path to fund_links.txt")
     parser.add_argument("--wealth-output", type=Path, default=DEFAULT_WEALTH_OUTPUT, help="Output JSON path for wealth products")
     parser.add_argument("--fund-output", type=Path, default=DEFAULT_FUND_OUTPUT, help="Output JSON path for fund products")

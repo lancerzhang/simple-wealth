@@ -12,7 +12,7 @@ SCHEDULE_NAME="wealth-scraper-daily"  # timer trigger name
 # FC cron is UTC; 08:00 CST == 00:00 UTC
 CRON_EXPR="0 0 0 * * *"
 
-WEALTH_LINKS_PATH="data/wealth_links.txt"
+WEALTH_LINKS_PATH="data/wealth_links.json"
 FUND_LINKS_PATH="data/fund_links.txt"
 WEALTH_OUTPUT_PATH="/tmp/wealth.json"
 FUND_OUTPUT_PATH="/tmp/fund.json"
@@ -38,7 +38,7 @@ if [[ -s "${PYTHON_DIR}/requirements.txt" ]]; then
 fi
 
 cp -R "${PYTHON_DIR}/wealth_scraper" "$BUILD_DIR/"
-cp "${PYTHON_DIR}/data/wealth_links.txt" "$BUILD_DIR/data/wealth_links.txt"
+cp "${PYTHON_DIR}/data/wealth_links.json" "$BUILD_DIR/data/wealth_links.json"
 cp "${PYTHON_DIR}/data/fund_links.txt" "$BUILD_DIR/data/fund_links.txt"
 cp "${PYTHON_DIR}/scripts/wealth_scraper.py" "$BUILD_DIR/scripts/wealth_scraper.py"
 cp "${PYTHON_DIR}/requirements.txt" "$BUILD_DIR/requirements.txt"

@@ -69,12 +69,12 @@ const Home: React.FC = () => {
             <div className="mt-3">
               <div className="flex flex-col gap-2">
                 <a
-                  href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/wealth_links.txt"
+                  href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/wealth_links.json"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-mono hover:bg-emerald-100"
                 >
-                  wealth_links.txt（理财）
+                  wealth_links.json（理财）
                 </a>
                 <a
                   href="https://github.com/lancerzhang/simple-wealth/blob/main/python/data/fund_links.txt"

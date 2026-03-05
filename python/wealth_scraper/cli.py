@@ -9,17 +9,17 @@ from .config import (
     DEFAULT_WEALTH_LINKS,
     DEFAULT_WEALTH_OUTPUT,
 )
-from .scraper import load_links, scrape_all, write_json
+from .scraper import load_links, load_targets, scrape_all, write_json
 
 
 def _scrape_one(label: str, links_path: Path, output_path: Path) -> None:
-    urls = load_links(links_path)
-    if not urls:
+    items = load_targets(links_path) if links_path.suffix.lower() == ".json" else load_links(links_path)
+    if not items:
         print(f"[{label}] no urls in {links_path}, skip")
         return
-    products, failures = scrape_all(urls)
+    products, failures = scrape_all(items)
     write_json(output_path, products)
-    total = len(urls)
+    total = len(items)
     success = len(products)
     failed = len(failures)
     print(f"[{label}] wrote {success} products to {output_path}")
@@ -32,7 +32,7 @@ def _scrape_one(label: str, links_path: Path, output_path: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Scrape wealth/fund product data.")
 
-    parser.add_argument("--wealth-links", type=Path, default=DEFAULT_WEALTH_LINKS, help="Path to wealth_links.txt")
+    parser.add_argument("--wealth-links", type=Path, default=DEFAULT_WEALTH_LINKS, help="Path to wealth_links.json")
     parser.add_argument("--wealth-output", type=Path, default=DEFAULT_WEALTH_OUTPUT, help="Output JSON path for wealth products")
     parser.add_argument("--fund-links", type=Path, default=DEFAULT_FUND_LINKS, help="Path to fund_links.txt")
     parser.add_argument("--fund-output", type=Path, default=DEFAULT_FUND_OUTPUT, help="Output JSON path for fund products")

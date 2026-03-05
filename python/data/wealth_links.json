@@ -1,0 +1,119 @@
+{
+  "sites": [
+    {
+      "site": "建信理财",
+      "host": "www.wealthccb.com",
+      "scraper": "wealthccb",
+      "retries": 7,
+      "products": [
+        {
+          "url": "https://www.wealthccb.com/product/12.html",
+          "salesChannels": ["建设银行"]
+        },
+        {
+          "url": "https://www.wealthccb.com/product/11.html",
+          "salesChannels": ["建设银行"]
+        }
+      ]
+    },
+    {
+      "site": "兴银理财",
+      "host": "www.cibwm.com.cn",
+      "scraper": "cibwm",
+      "products": [
+        {
+          "url": "https://www.cibwm.com.cn/personal-products/detail/c019920872708309a6b042e0818c6f04",
+          "salesChannels": ["兴业银行"]
+        },
+        {
+          "url": "https://www.cibwm.com.cn/personal-products/detail/911701ab032bc1d016a18ee31e4f4409",
+          "salesChannels": ["兴业银行"]
+        },
+        {
+          "url": "https://www.cibwm.com.cn/personal-products/detail/a102923bfbe7dff741fab89d649db694",
+          "salesChannels": ["兴业银行"]
+        },
+        {
+          "url": "https://www.cibwm.com.cn/personal-products/detail/cddfa5704a0dab7a1b7faba1036c32d4",
+          "salesChannels": ["兴业银行"]
+        }
+      ]
+    },
+    {
+      "site": "交银理财",
+      "host": "www.bocommwm.com",
+      "scraper": "bocomm",
+      "products": [
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225149",
+          "salesChannels": ["建设银行", "交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225495",
+          "salesChannels": ["交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811226004",
+          "salesChannels": ["交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225438",
+          "salesChannels": ["交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225085",
+          "salesChannels": ["交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225492",
+          "salesChannels": ["交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225488",
+          "salesChannels": ["交通银行"]
+        },
+        {
+          "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225417",
+          "salesChannels": ["交通银行"]
+        }
+      ]
+    },
+    {
+      "site": "浦银理财",
+      "host": "www.spdb-wm.com",
+      "scraper": "spdb",
+      "products": [
+        {
+          "url": "https://www.spdb-wm.com/financialProducts/cpxq.shtml?REAL_PRD_CODE=2501250689",
+          "salesChannels": ["交通银行"]
+        }
+      ]
+    },
+    {
+      "site": "中国理财",
+      "host": "xinxipilu.chinawealth.com.cn",
+      "scraper": "chinawealth",
+      "products": [
+        {
+          "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7008223000015",
+          "salesChannels": ["工商银行"]
+        },
+        {
+          "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7007925000172",
+          "salesChannels": ["兴业银行"]
+        }
+      ]
+    },
+    {
+      "site": "招商银行",
+      "host": "cfweb.paas.cmbchina.com",
+      "scraper": "cmb",
+      "products": [
+        {
+          "url": "https://cfweb.paas.cmbchina.com/personal/saproductdetail.aspx?saaCod=D07&funCod=GYPB0907",
+          "salesChannels": ["工商银行", "招商银行"]
+        }
+      ]
+    }
+  ]
+}

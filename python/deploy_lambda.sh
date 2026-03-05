@@ -50,7 +50,7 @@ if [[ "$SKIP_PIP_INSTALL" != "1" ]] && grep -Eqv '^\s*(#|$)' requirements.txt; t
 fi
 
 cp -R wealth_scraper "$BUILD_DIR/"
-cp data/wealth_links.txt "$BUILD_DIR/data/wealth_links.txt"
+cp data/wealth_links.json "$BUILD_DIR/data/wealth_links.json"
 cp data/fund_links.txt "$BUILD_DIR/data/fund_links.txt"
 cp requirements.txt "$BUILD_DIR/requirements.txt"
 cp scripts/wealth_scraper.py "$BUILD_DIR/scripts/wealth_scraper.py"
@@ -146,7 +146,7 @@ if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >
     --timeout "$TIMEOUT" \
     --memory-size "$MEMORY" \
     --role "$LAMBDA_ROLE_ARN" \
-    --environment "Variables={WEALTH_LINKS_PATH=data/wealth_links.txt,WEALTH_OUTPUT_PATH=/tmp/wealth.json,FUND_LINKS_PATH=data/fund_links.txt,FUND_OUTPUT_PATH=/tmp/fund.json,S3_BUCKET=${BUCKET},S3_PREFIX=${PREFIX},S3_REGION=${S3_REGION}}" \
+    --environment "Variables={WEALTH_LINKS_PATH=data/wealth_links.json,WEALTH_OUTPUT_PATH=/tmp/wealth.json,FUND_LINKS_PATH=data/fund_links.txt,FUND_OUTPUT_PATH=/tmp/fund.json,S3_BUCKET=${BUCKET},S3_PREFIX=${PREFIX},S3_REGION=${S3_REGION}}" \
     --region "$REGION" >/dev/null
   wait_ready "$FUNCTION_NAME"
 else
@@ -158,7 +158,7 @@ else
     --zip-file "fileb://${ZIP_PATH}" \
     --timeout "$TIMEOUT" \
     --memory-size "$MEMORY" \
-    --environment "Variables={WEALTH_LINKS_PATH=data/wealth_links.txt,WEALTH_OUTPUT_PATH=/tmp/wealth.json,FUND_LINKS_PATH=data/fund_links.txt,FUND_OUTPUT_PATH=/tmp/fund.json,S3_BUCKET=${BUCKET},S3_PREFIX=${PREFIX},S3_REGION=${S3_REGION}}" \
+    --environment "Variables={WEALTH_LINKS_PATH=data/wealth_links.json,WEALTH_OUTPUT_PATH=/tmp/wealth.json,FUND_LINKS_PATH=data/fund_links.txt,FUND_OUTPUT_PATH=/tmp/fund.json,S3_BUCKET=${BUCKET},S3_PREFIX=${PREFIX},S3_REGION=${S3_REGION}}" \
     --region "$REGION" >/dev/null
   aws lambda wait function-exists --function-name "$FUNCTION_NAME" --region "$REGION" >/dev/null 2>&1 || true
 fi

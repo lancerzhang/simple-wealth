@@ -6,7 +6,7 @@ PYTHON_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 # Data files
-DEFAULT_WEALTH_LINKS = PYTHON_DIR / "data" / "wealth_links.txt"
+DEFAULT_WEALTH_LINKS = PYTHON_DIR / "data" / "wealth_links.json"
 DEFAULT_FUND_LINKS = PYTHON_DIR / "data" / "fund_links.txt"
 
 # Outputs
