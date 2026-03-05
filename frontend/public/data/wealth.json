@@ -17,7 +17,7 @@
     "url": "https://www.wealthccb.com/product/12.html",
     "type": "wealth",
     "id": "w-JXQYAX720D2018201",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "建信理财“安鑫”（最低持有360天）按日开放固定收益类净值型人民币理财产品",
@@ -37,7 +37,7 @@
     "url": "https://www.wealthccb.com/product/11.html",
     "type": "wealth",
     "id": "w-JXQYAX360D2018202",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "兴银理财汇利日盈6号日开固收类理财产品",
@@ -57,7 +57,7 @@
     "url": "https://www.cibwm.com.cn/personal-products/detail/c019920872708309a6b042e0818c6f04",
     "type": "wealth",
     "id": "w-9W10006A",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "兴银理财丰利逸动11个月最短持有期日开2号增强型固收类理财产品",
@@ -77,7 +77,7 @@
     "url": "https://www.cibwm.com.cn/personal-products/detail/911701ab032bc1d016a18ee31e4f4409",
     "type": "wealth",
     "id": "w-9S65024A",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "兴银理财稳利恒盈增利六个月定期开放6号固收类理财产品",
@@ -97,7 +97,27 @@
     "url": "https://www.cibwm.com.cn/personal-products/detail/a102923bfbe7dff741fab89d649db694",
     "type": "wealth",
     "id": "w-9K60606A",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "兴银理财丰利悦动3个月最短持有期日开3号固收类理财产品",
+    "code": "9T33003A",
+    "issuer": "兴银理财",
+    "banks": [
+      "兴业银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 90,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 2.2257,
+      "3m": 3.5838,
+      "6m": 2.6271
+    },
+    "url": "https://www.cibwm.com.cn/personal-products/detail/cddfa5704a0dab7a1b7faba1036c32d4",
+    "type": "wealth",
+    "id": "w-9T33003A",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "交银理财稳享固收精选日开47号（90天持有期）理财产品",
@@ -116,11 +136,11 @@
       "3m": 2.2648,
       "6m": 5.0357
     },
-    "url": "https://www.bocommwm.cn/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?channelId=2503328&c_fundcode=5811225149",
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225149",
     "type": "wealth",
     "registrationCode": "Z7000925000252",
     "id": "w-Z7000925000252",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "交银理财稳享固收精选日日开4号理财产品",
@@ -138,11 +158,143 @@
       "3m": 3.4697,
       "6m": 3.833
     },
-    "url": "https://www.bocommwm.cn/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml",
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225495",
     "type": "wealth",
     "registrationCode": "Z7000925001373",
     "id": "w-5811225495",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "交银理财稳享灵动慧利日开26号（365天持有期）理财产品",
+    "code": "Z7000925001697",
+    "fundCode": "5811226004",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 365,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 5.4657,
+      "3m": 4.7784,
+      "6m": 4.7784
+    },
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811226004",
+    "type": "wealth",
+    "registrationCode": "Z7000925001697",
+    "id": "w-Z7000925001697",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "交银理财稳享智选日开3号（90天持有期）理财产品",
+    "code": "Z7000925001189",
+    "fundCode": "5811225438",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 90,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 5.5117,
+      "3m": 3.0003,
+      "6m": 4.4068
+    },
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225438",
+    "type": "wealth",
+    "registrationCode": "Z7000925001189",
+    "id": "w-Z7000925001189",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "交银理财稳享灵动慧利日开29号（90天持有期）理财产品",
+    "code": "Z7000925000166",
+    "fundCode": "5811225085",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 90,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 2.8533,
+      "3m": 4.7534,
+      "6m": 4.7238
+    },
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225085",
+    "type": "wealth",
+    "registrationCode": "Z7000925000166",
+    "id": "w-Z7000925000166",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "交银理财稳享鑫荣日日开28号理财产品B",
+    "code": "Z7000925001165",
+    "fundCode": "5811225492",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": null,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 4.8953,
+      "3m": 5.1761,
+      "6m": 4.1643
+    },
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225492",
+    "type": "wealth",
+    "registrationCode": "Z7000925001165",
+    "id": "w-Z7000925001165",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "交银理财稳享灵动添利8号理财产品",
+    "code": "Z7000925001131",
+    "fundCode": "5811225488",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": null,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 2.826,
+      "3m": 4.5976,
+      "6m": 4.7349
+    },
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225488",
+    "type": "wealth",
+    "registrationCode": "Z7000925001131",
+    "id": "w-Z7000925001131",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "交银理财稳享固收精选日开14号（14天持有期）理财产品",
+    "code": "Z7000925001103",
+    "fundCode": "5811225417",
+    "issuer": "交银理财",
+    "banks": [
+      "交通银行"
+    ],
+    "currency": "人民币",
+    "minHoldDays": 14,
+    "riskLevel": "R2",
+    "returns": {
+      "1m": 1.6627,
+      "3m": 5.0292,
+      "6m": 4.053
+    },
+    "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225417",
+    "type": "wealth",
+    "registrationCode": "Z7000925001103",
+    "id": "w-Z7000925001103",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "季季鑫最短持有期35号A",
@@ -163,7 +315,7 @@
     "url": "https://www.spdb-wm.com/financialProducts/cpxq.shtml?REAL_PRD_CODE=2501250689",
     "type": "wealth",
     "id": "w-Z7006925000599",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "高盛工银理财·盛景每日开放固定收益类美元理财产品1期",
@@ -185,7 +337,29 @@
     "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7008223000015",
     "type": "wealth",
     "id": "w-Z7008223000015",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
+  },
+  {
+    "name": "民生理财富竹纯债7天持有期32号理财产品",
+    "code": "Z7007925000172",
+    "registrationCode": "Z7007925000172",
+    "subShareCode": "FBAE60132N",
+    "issuer": "民生理财",
+    "banks": [
+      "兴业银行"
+    ],
+    "currency": "人民币(CNY)",
+    "minHoldDays": 7,
+    "riskLevel": "R1",
+    "returns": {
+      "1m": 0.0,
+      "3m": 0.0,
+      "6m": 0.0
+    },
+    "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7007925000172",
+    "type": "wealth",
+    "id": "w-Z7007925000172",
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   },
   {
     "name": "工银理财·全球添益双周开美元产品（私行尊享）",
@@ -210,6 +384,6 @@
     "saaCode": "D07",
     "funCode": "GYPB0907",
     "id": "w-Z7000823000336",
-    "updatedAt": "2026-03-05T02:07:45+00:00"
+    "updatedAt": "2026-03-05T02:15:30+00:00"
   }
 ]
