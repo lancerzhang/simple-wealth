@@ -8,11 +8,17 @@
       "products": [
         {
           "url": "https://www.wealthccb.com/product/12.html",
-          "salesChannels": ["建设银行"]
+          "salesChannels": [
+            "建设银行"
+          ],
+          "name": "建信理财“安鑫”（最低持有720天）按日开放固定收益类净值型人民币理财产品"
         },
         {
           "url": "https://www.wealthccb.com/product/11.html",
-          "salesChannels": ["建设银行"]
+          "salesChannels": [
+            "建设银行"
+          ],
+          "name": "建信理财“安鑫”（最低持有360天）按日开放固定收益类净值型人民币理财产品"
         }
       ]
     },
@@ -23,19 +29,31 @@
       "products": [
         {
           "url": "https://www.cibwm.com.cn/personal-products/detail/c019920872708309a6b042e0818c6f04",
-          "salesChannels": ["兴业银行"]
+          "salesChannels": [
+            "兴业银行"
+          ],
+          "name": "兴银理财汇利日盈6号日开固收类理财产品"
         },
         {
           "url": "https://www.cibwm.com.cn/personal-products/detail/911701ab032bc1d016a18ee31e4f4409",
-          "salesChannels": ["兴业银行"]
+          "salesChannels": [
+            "兴业银行"
+          ],
+          "name": "兴银理财丰利逸动11个月最短持有期日开2号增强型固收类理财产品"
         },
         {
           "url": "https://www.cibwm.com.cn/personal-products/detail/a102923bfbe7dff741fab89d649db694",
-          "salesChannels": ["兴业银行"]
+          "salesChannels": [
+            "兴业银行"
+          ],
+          "name": "兴银理财稳利恒盈增利六个月定期开放6号固收类理财产品"
         },
         {
           "url": "https://www.cibwm.com.cn/personal-products/detail/cddfa5704a0dab7a1b7faba1036c32d4",
-          "salesChannels": ["兴业银行"]
+          "salesChannels": [
+            "兴业银行"
+          ],
+          "name": "兴银理财丰利悦动3个月最短持有期日开3号固收类理财产品"
         }
       ]
     },
@@ -46,35 +64,60 @@
       "products": [
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225149",
-          "salesChannels": ["建设银行", "交通银行"]
+          "salesChannels": [
+            "建设银行",
+            "交通银行"
+          ],
+          "name": "交银理财稳享固收精选日开47号（90天持有期）理财产品"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225495",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享固收精选日日开4号理财产品"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811226004",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享灵动慧利日开26号（365天持有期）理财产品"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225438",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享智选日开3号（90天持有期）理财产品"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225085",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享灵动慧利日开29号（90天持有期）理财产品"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225492",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享鑫荣日日开28号理财产品B"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225488",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享灵动添利8号理财产品"
         },
         {
           "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225417",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "交银理财稳享固收精选日开14号（14天持有期）理财产品"
         }
       ]
     },
@@ -85,7 +128,10 @@
       "products": [
         {
           "url": "https://www.spdb-wm.com/financialProducts/cpxq.shtml?REAL_PRD_CODE=2501250689",
-          "salesChannels": ["交通银行"]
+          "salesChannels": [
+            "交通银行"
+          ],
+          "name": "季季鑫最短持有期35号A"
         }
       ]
     },
@@ -96,11 +142,17 @@
       "products": [
         {
           "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7008223000015",
-          "salesChannels": ["工商银行"]
+          "salesChannels": [
+            "工商银行"
+          ],
+          "name": "高盛工银理财·盛景每日开放固定收益类美元理财产品1期"
         },
         {
           "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7007925000172",
-          "salesChannels": ["兴业银行"]
+          "salesChannels": [
+            "兴业银行"
+          ],
+          "name": "民生理财富竹纯债7天持有期32号理财产品"
         }
       ]
     },
@@ -111,7 +163,11 @@
       "products": [
         {
           "url": "https://cfweb.paas.cmbchina.com/personal/saproductdetail.aspx?saaCod=D07&funCod=GYPB0907",
-          "salesChannels": ["工商银行", "招商银行"]
+          "salesChannels": [
+            "工商银行",
+            "招商银行"
+          ],
+          "name": "工银理财·全球添益双周开美元产品（私行尊享）"
         }
       ]
     }

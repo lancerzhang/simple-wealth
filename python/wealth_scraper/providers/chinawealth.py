@@ -5,6 +5,7 @@ import os
 import re
 import subprocess
 import tempfile
+import datetime as dt
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import parse_qs, urlparse
 
@@ -98,8 +99,7 @@ def _parse_risk_level(text: str) -> str:
     direct = re.search(r"R\d", text, flags=re.I)
     if direct:
         return direct.group(0).upper()
-    if "一级" in text or "低" in text:
-        return "R1"
+    # Match more specific phrases first so "二级(中低)" does not fall through to R1.
     if "二级" in text or "中低" in text:
         return "R2"
     if "三级" in text or "中" in text:
@@ -108,7 +108,43 @@ def _parse_risk_level(text: str) -> str:
         return "R4"
     if "五级" in text or "高" in text:
         return "R5"
+    if "一级" in text or "低" in text:
+        return "R1"
     return ""
+
+
+def _build_nav_series(
+    net_items: List[Dict],
+    *,
+    sub_share_code: str = "",
+    min_date: Optional[dt.date] = None,
+) -> List[Tuple[dt.date, float]]:
+    series: List[Tuple[dt.date, float]] = []
+    for item in net_items:
+        item_sub_share = str(item.get("subShareCode") or "").strip()
+        if sub_share_code and item_sub_share and item_sub_share != sub_share_code:
+            continue
+
+        date_value = parse_date(item.get("netValueDate"))
+        if not date_value:
+            continue
+        if min_date and date_value < min_date:
+            continue
+
+        nav_value = (
+            item.get("acumltNetVal")
+            or item.get("shareNetVal")
+            or item.get("priceBuy")
+            or item.get("priceRedeem")
+        )
+        if nav_value in (None, ""):
+            continue
+
+        try:
+            series.append((date_value, float(nav_value)))
+        except (TypeError, ValueError):
+            continue
+    return series
 
 
 def fetch(url: str) -> Dict:
@@ -144,19 +180,14 @@ def fetch(url: str) -> Dict:
     detail_data = detail_resp.get("data") or {}
     basic = detail_data.get("prodBasicInfoVo") or {}
     net = detail_data.get("productTypeNetValueVo") or {}
-    net_line = net.get("netValueLine") or []
-
-    series: List[Tuple] = []
-    for item in net_line:
-        date_value = parse_date(item.get("netValueDate"))
-        nav_value = (
-            item.get("acumltNetVal")
-            or item.get("shareNetVal")
-            or item.get("priceBuy")
-            or item.get("priceRedeem")
-        )
-        if date_value and nav_value:
-            series.append((date_value, float(nav_value)))
+    net_line = net.get("netValueLine") or (net.get("netValueVoList") or {}).get("list") or []
+    default_sub_share = str(net.get("defaultSubShareCode") or "").strip()
+    product_start_date = parse_date(basic.get("prodSdate"))
+    series = _build_nav_series(
+        net_line,
+        sub_share_code=default_sub_share,
+        min_date=product_start_date,
+    )
 
     return_1m, start_1m, start_val_1m, end_1m, end_val_1m = compute_window_return_with_details(series, 30)
     return_3m, start_3m, start_val_3m, end_3m, end_val_3m = compute_window_return_with_details(series, 90)
@@ -179,7 +210,6 @@ def fetch(url: str) -> Dict:
     issuer = strip_company_suffix(basic.get("orgName") or list_item.get("orgName") or "")
     risk_text = basic.get("prodRiskLevelName") or list_item.get("prodRiskLevelName") or ""
     banks = CHINAWEALTH_BANK_OVERRIDES.get(reg_code) or ["工商银行"]
-    default_sub_share = net.get("defaultSubShareCode") or ""
 
     return {
         "name": name,

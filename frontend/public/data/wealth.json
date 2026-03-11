@@ -350,16 +350,16 @@
     ],
     "currency": "人民币(CNY)",
     "minHoldDays": 7,
-    "riskLevel": "R1",
+    "riskLevel": "R2",
     "returns": {
-      "1m": 0.0128,
-      "3m": 0.0128,
-      "6m": 0.0128
+      "1m": 2.5291,
+      "3m": 2.5291,
+      "6m": 2.5291
     },
     "url": "https://xinxipilu.chinawealth.com.cn/queryMenu/prodType/prodTypeDetail?prodRegCode=Z7007925000172",
     "type": "wealth",
     "id": "w-Z7007925000172",
-    "updatedAt": "2026-03-11T06:55:15+00:00"
+    "updatedAt": "2026-03-11T07:44:29+00:00"
   },
   {
     "name": "工银理财·全球添益双周开美元产品（私行尊享）",
