@@ -10,14 +10,14 @@
     "minHoldDays": 720,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.5725,
-      "3m": 3.927,
-      "6m": 3.3835
+      "1m": 1.4261,
+      "3m": 3.9499,
+      "6m": 3.3903
     },
     "url": "https://www.wealthccb.com/product/12.html",
     "type": "wealth",
     "id": "w-JXQYAX720D2018201",
-    "updatedAt": "2026-06-20T19:26:30+00:00"
+    "updatedAt": "2026-06-21T04:14:58+00:00"
   },
   {
     "name": "建信理财“安鑫”（最低持有360天）按日开放固定收益类净值型人民币理财产品",
@@ -30,18 +30,18 @@
     "minHoldDays": 360,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.9125,
-      "3m": 3.093,
-      "6m": 2.8507
+      "1m": 1.681,
+      "3m": 3.1097,
+      "6m": 2.8575
     },
     "url": "https://www.wealthccb.com/product/11.html",
     "type": "wealth",
     "id": "w-JXQYAX360D2018202",
-    "updatedAt": "2026-06-20T19:26:30+00:00"
+    "updatedAt": "2026-06-21T04:14:58+00:00"
   },
   {
-    "name": "",
-    "code": "",
+    "name": "季季鑫最短持有期35号A",
+    "code": "Z7006925000599",
     "realProductCode": "2501250689",
     "issuer": "浦银理财",
     "banks": [
@@ -49,7 +49,7 @@
     ],
     "currency": "人民币",
     "minHoldDays": 90,
-    "riskLevel": "",
+    "riskLevel": "R2",
     "returns": {
       "1m": 0.8299,
       "3m": 1.1092,
@@ -57,8 +57,8 @@
     },
     "url": "https://www.spdb-wm.com/financialProducts/cpxq.shtml?REAL_PRD_CODE=2501250689",
     "type": "wealth",
-    "id": "w-15",
-    "updatedAt": "2026-06-20T19:26:30+00:00"
+    "id": "w-Z7006925000599",
+    "updatedAt": "2026-06-21T04:14:58+00:00"
   },
   {
     "name": "工银理财·全球添益双周开美元产品（私行尊享）",
@@ -83,6 +83,6 @@
     "saaCode": "D07",
     "funCode": "GYPB0907",
     "id": "w-Z7000823000336",
-    "updatedAt": "2026-06-20T19:26:30+00:00"
+    "updatedAt": "2026-06-21T04:14:58+00:00"
   }
 ]
