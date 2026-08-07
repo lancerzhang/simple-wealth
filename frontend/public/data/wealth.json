@@ -10,14 +10,14 @@
     "minHoldDays": 720,
     "riskLevel": "R2",
     "returns": {
-      "1m": -0.0978,
-      "3m": 1.314,
-      "6m": 2.4345
+      "1m": 0.5098,
+      "3m": 1.2287,
+      "6m": 2.4396
     },
     "url": "https://www.wealthccb.com/product/12.html",
     "type": "wealth",
     "id": "w-JXQYAX720D2018201",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "建信理财“安鑫”（最低持有360天）按日开放固定收益类净值型人民币理财产品",
@@ -30,14 +30,14 @@
     "minHoldDays": 360,
     "riskLevel": "R2",
     "returns": {
-      "1m": -0.3554,
-      "3m": 0.9135,
-      "6m": 1.9004
+      "1m": 0.109,
+      "3m": 0.868,
+      "6m": 1.9042
     },
     "url": "https://www.wealthccb.com/product/11.html",
     "type": "wealth",
     "id": "w-JXQYAX360D2018202",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享固收精选日开47号（90天持有期）理财产品",
@@ -52,15 +52,15 @@
     "minHoldDays": 90,
     "riskLevel": "R2",
     "returns": {
-      "1m": 1.625,
-      "3m": 2.1395,
-      "6m": 2.2487
+      "1m": 1.8909,
+      "3m": 2.2251,
+      "6m": 2.2878
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225149",
     "type": "wealth",
     "registrationCode": "Z7000925000252",
     "id": "w-Z7000925000252",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享固收精选日日开4号理财产品",
@@ -74,15 +74,15 @@
     "minHoldDays": 1,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.6523,
-      "3m": 0.7778,
-      "6m": 1.1046
+      "1m": 0.8101,
+      "3m": 0.82,
+      "6m": 1.1185
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225495",
     "type": "wealth",
     "registrationCode": "Z7000925001373",
     "id": "w-5811225495",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享灵动慧利日开26号（365天持有期）理财产品",
@@ -96,15 +96,15 @@
     "minHoldDays": 365,
     "riskLevel": "R2",
     "returns": {
-      "1m": 1.5686,
-      "3m": 3.159,
-      "6m": 3.5527
+      "1m": 1.6298,
+      "3m": 3.1637,
+      "6m": 3.4895
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811226004",
     "type": "wealth",
     "registrationCode": "Z7000925001697",
     "id": "w-Z7000925001697",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享智选日开3号（90天持有期）理财产品",
@@ -118,15 +118,15 @@
     "minHoldDays": 90,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.7781,
-      "3m": 1.0768,
-      "6m": 1.9635
+      "1m": 0.8623,
+      "3m": 1.1024,
+      "6m": 1.9836
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225438",
     "type": "wealth",
     "registrationCode": "Z7000925001189",
     "id": "w-Z7000925001189",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享灵动慧利日开29号（90天持有期）理财产品",
@@ -140,15 +140,15 @@
     "minHoldDays": 90,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.3232,
-      "3m": 0.6833,
+      "1m": 0.3134,
+      "3m": 0.6763,
       "6m": 1.569
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225085",
     "type": "wealth",
     "registrationCode": "Z7000925000166",
     "id": "w-Z7000925000166",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享鑫荣日日开28号理财产品B",
@@ -162,15 +162,15 @@
     "minHoldDays": null,
     "riskLevel": "R2",
     "returns": {
-      "1m": 1.6254,
-      "3m": 1.4412,
-      "6m": 1.9726
+      "1m": 1.7301,
+      "3m": 1.4802,
+      "6m": 1.9818
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225492",
     "type": "wealth",
     "registrationCode": "Z7000925001165",
     "id": "w-Z7000925001165",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享灵动添利8号理财产品",
@@ -184,15 +184,15 @@
     "minHoldDays": null,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.325,
-      "3m": 0.5535,
-      "6m": 1.1415
+      "1m": 0.2306,
+      "3m": 0.5447,
+      "6m": 1.1351
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225488",
     "type": "wealth",
     "registrationCode": "Z7000925001131",
     "id": "w-Z7000925001131",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "交银理财稳享固收精选日开14号（14天持有期）理财产品",
@@ -206,15 +206,15 @@
     "minHoldDays": 14,
     "riskLevel": "R2",
     "returns": {
-      "1m": -0.1112,
-      "3m": 0.817,
+      "1m": -0.1078,
+      "3m": 0.8086,
       "6m": 1.3576
     },
     "url": "https://www.bocommwm.com/BankCommSite/shtml/jylc/cn/2503328/2503403/list.shtml?c_fundcode=5811225417",
     "type": "wealth",
     "registrationCode": "Z7000925001103",
     "id": "w-Z7000925001103",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "季季鑫最短持有期35号A",
@@ -228,14 +228,14 @@
     "minHoldDays": 90,
     "riskLevel": "R2",
     "returns": {
-      "1m": 0.4729,
-      "3m": 0.8695,
-      "6m": 1.0898
+      "1m": 0.3545,
+      "3m": 0.8298,
+      "6m": 1.0837
     },
     "url": "https://www.spdb-wm.com/financialProducts/cpxq.shtml?REAL_PRD_CODE=2501250689",
     "type": "wealth",
     "id": "w-Z7006925000599",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   },
   {
     "name": "",
@@ -260,6 +260,6 @@
     "saaCode": "D07",
     "funCode": "GYPB0907",
     "id": "w-GYPB0907",
-    "updatedAt": "2026-08-06T14:08:19+00:00"
+    "updatedAt": "2026-08-06T23:58:07+00:00"
   }
 ]
